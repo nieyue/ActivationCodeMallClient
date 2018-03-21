@@ -3,6 +3,7 @@
     <div class="body-wrap">
     <div class="body-btn-wrap">
       <!-- <Button type='primary'  @click='add'>增加公共配置</Button> -->
+      <Button type='primary'  @click='update(updateConfig)'>修改公共配置</Button>
     </div>
 		 <!--新增 -->
      <Modal v-model="addConfigModel"
@@ -13,6 +14,46 @@
       <Form ref="addConfig" :model="addConfig" :label-width="100" label-position="right"  :rules="addConfigRules">
         <FormItem prop="customerServicePhone" label="客服电话:">
           <Input type="text" v-model="addConfig.customerServicePhone" placeholder="客服电话">
+          </Input>
+        </FormItem>
+        <FormItem prop="orderMerMaxNumber" label="最大订单商品数量:">
+          <Input type="text" v-model="addConfig.orderMerMaxNumber" placeholder="最大订单商品数量">
+          </Input>
+        </FormItem>
+        <FormItem prop="sellerIntegralPer" label="商户每盈利一元钱获得积分:">
+          <Input type="text" v-model="addConfig.sellerIntegralPer" placeholder="商户每盈利一元钱获得积分">
+          </Input>
+        </FormItem>
+        <FormItem prop="userIntegralPer" label="用户每消费一元钱获得积分:">
+          <Input type="text" v-model="addConfig.userIntegralPer" placeholder="用户每消费一元钱获得积分">
+          </Input>
+        </FormItem>
+        <FormItem prop="sellerSincerityUpgradeMoney" label="商户诚信升级金额:">
+          <Input type="text" v-model="addConfig.sellerSincerityUpgradeMoney" placeholder="商户诚信升级金额">
+          </Input>
+        </FormItem>
+        <FormItem prop="freezeDayNumber" label="冻结天数:">
+          <Input type="text" v-model="addConfig.freezeDayNumber" placeholder="冻结天数">
+          </Input>
+        </FormItem>
+        <FormItem prop="platformProportion" label="平台分成比例，单位%:">
+          <Input type="text" v-model="addConfig.platformProportion" placeholder="平台分成比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="spreadProportion" label="推广分成比例，单位%:">
+          <Input type="text" v-model="addConfig.spreadProportion" placeholder="推广分成比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="minWithdrawals" label="提现最低额度:">
+          <Input type="text" v-model="addConfig.minWithdrawals" placeholder="提现最低额度">
+          </Input>
+        </FormItem>
+        <FormItem prop="withdrawalsProportion" label="提现手续费比例，单位%:">
+          <Input type="text" v-model="addConfig.withdrawalsProportion" placeholder="提现手续费比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="withdrawalsMinBrokerage" label="无提现手续费最低额度:">
+          <Input type="text" v-model="addConfig.withdrawalsMinBrokerage" placeholder="无提现手续费最低额度">
           </Input>
         </FormItem>
       </Form>
@@ -32,8 +73,48 @@
            :mask-closable="false"
     >
       <Form ref="updateConfig" :model="updateConfig" :label-width="100" label-position="right"  :rules="updateConfigRules">
-        <FormItem prop="customerServicePhone" label="客服电话:">
+              <FormItem prop="customerServicePhone" label="客服电话:">
           <Input type="text" v-model="updateConfig.customerServicePhone" placeholder="客服电话">
+          </Input>
+        </FormItem>
+        <FormItem prop="orderMerMaxNumber" label="最大订单商品数量:">
+          <Input type="text" v-model="updateConfig.orderMerMaxNumber" placeholder="最大订单商品数量">
+          </Input>
+        </FormItem>
+        <FormItem prop="sellerIntegralPer" label="商户每盈利一元钱获得积分:">
+          <Input type="text" v-model="updateConfig.sellerIntegralPer" placeholder="商户每盈利一元钱获得积分">
+          </Input>
+        </FormItem>
+        <FormItem prop="userIntegralPer" label="用户每消费一元钱获得积分:">
+          <Input type="text" v-model="updateConfig.userIntegralPer" placeholder="用户每消费一元钱获得积分">
+          </Input>
+        </FormItem>
+        <FormItem prop="sellerSincerityUpgradeMoney" label="商户诚信升级金额:">
+          <Input type="text" v-model="updateConfig.sellerSincerityUpgradeMoney" placeholder="商户诚信升级金额">
+          </Input>
+        </FormItem>
+        <FormItem prop="freezeDayNumber" label="冻结天数:">
+          <Input type="text" v-model="updateConfig.freezeDayNumber" placeholder="冻结天数">
+          </Input>
+        </FormItem>
+        <FormItem prop="platformProportion" label="平台分成比例，单位%:">
+          <Input type="text" v-model="updateConfig.platformProportion" placeholder="平台分成比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="spreadProportion" label="推广分成比例，单位%:">
+          <Input type="text" v-model="updateConfig.spreadProportion" placeholder="推广分成比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="minWithdrawals" label="提现最低额度:">
+          <Input type="text" v-model="updateConfig.minWithdrawals" placeholder="提现最低额度">
+          </Input>
+        </FormItem>
+        <FormItem prop="withdrawalsProportion" label="提现手续费比例，单位%:">
+          <Input type="text" v-model="updateConfig.withdrawalsProportion" placeholder="提现手续费比例，单位%">
+          </Input>
+        </FormItem>
+        <FormItem prop="withdrawalsMinBrokerage" label="无提现手续费最低额度:">
+          <Input type="text" v-model="updateConfig.withdrawalsMinBrokerage" placeholder="无提现手续费最低额度">
           </Input>
         </FormItem>
       </Form>
@@ -46,10 +127,66 @@
       </div>
     </Modal>
     <!--修改end -->
-      <Table border :columns='configColumns' :data='configList' ref='table' size="small"></Table>
+      <Card v-if="!updateConfig">暂无</Card>
+      <Card v-if="updateConfig" :bordered="true">
+            <p slot="title">配置项</p>
+            <p>
+              <span>客服电话：</span>
+              <span v-text="updateConfig.customerServicePhone"></span>
+            </p>
+            <p>
+              <span>最大订单商品数量：</span>
+              <span v-text="updateConfig.orderMerMaxNumber"></span>
+            </p>
+            <p>
+              <span>商户每盈利一元钱获得积分：</span>
+              <span v-text="updateConfig.sellerIntegralPer"></span>
+            </p>
+            <p>
+              <span>用户每消费一元钱获得积分：</span>
+              <span v-text="updateConfig.userIntegralPer"></span>
+            </p>
+            <p>
+              <span>商户诚信升级金额：</span>
+              <span v-text="updateConfig.sellerSincerityUpgradeMoney"></span>元
+            </p>
+            <p>
+              <span>冻结天数：</span>
+              <span v-text="updateConfig.freezeDayNumber"></span>天
+            </p>
+            <p>
+              <span>平台分成比例：</span>
+              <span v-text="updateConfig.platformProportion"></span>%
+            </p>
+            <p>
+              <span>推广分成比例：</span>
+              <span v-text="updateConfig.spreadProportion"></span>%
+            </p>
+            <p>
+              <span>提现最低额度：</span>
+              <span v-text="updateConfig.minWithdrawals"></span>
+            </p>
+            <p>
+              <span>提现手续费比例：</span>
+              <span v-text="updateConfig.withdrawalsProportion"></span>%
+            </p>
+            <p>
+              <span>无提现手续费最低额度：</span>
+              <span v-text="updateConfig.withdrawalsMinBrokerage"></span>元
+            </p>
+            <p>
+              <span>创建时间：</span>
+              <span v-text="updateConfig.createDate"></span>
+            </p>
+            <p>
+              <span>更新时间：</span>
+              <span v-text="updateConfig.updateDate"></span>
+            </p>
+      </Card>
+      <!-- <Table border :columns='configColumns' :data='configList' ref='table' size="small"></Table>
         <div style='display: inline-block;float: right; margin-top:10px;'>
         <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'   @on-change='selectPage' show-elevator ></Page>
-      </div>
+      </div> -->
     </div>
 </template>
 <script>
@@ -85,81 +222,7 @@ export default {
 			updateConfig:{ },
       //删除参数
       deleteConfig:{},
-	    configList: [],
-	    configColumns: [
-        {
-          title: '序号',
-          align:'center',
-          render: (h, params) => {
-            return h('span', params.index
-            +(this.params.currentPage-1)*this.params.pageSize+this.params.startNum);
-          }
-        },
-        {
-          title: '公共配置id',
-          key: 'configId',
-          align:'center'
-        },
-        {
-        	title:'客服电话',
-        	key:'customerServicePhone',
-             align:'center'
-        },
-        {
-        	title:'创建时间',
-          key:'createDate',
-          sortable: true,
-          align:'center'
-        },
-        {
-        	title:'修改时间',
-          key:'updateDate',
-          sortable: true,
-          align:'center'
-        },
-				{
-          title: '操作',
-          key: 'action',
-          align:'center',
-          render: (h, params) => {
-            var varhh1=  h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginLeft: '10px'
-                },
-                on: {
-                    click: () => {
-                  
-                    this.update(params.row)
-                  }
-                }
-              }, '编辑');
-            var varhh2=  h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                style: {
-                  marginLeft: '10px'
-                },
-                on: {
-                  click: () => {
-                    this.delete(params.row)
-                  }
-                }
-              }, '删除');
-            	var s=h("div","");
-			s=h("div",[
-              varhh1
-              //,varhh2
-            ]);
-            return s;
-          }
-        }
-      ],
+	    configList: [{}]
     }
   },
   methods: {
@@ -181,13 +244,15 @@ export default {
      this.axiosbusiness.getList(this,{
        countUrl:'/config/count',
        listUrl:'/config/list',
-       list:'configList'
+       data:'configList',
+       success:()=>{
+         this.updateConfig=this.configList[0];
+       }
      },this.params)
     },
   //增加
 	 add (params) {
       this.addConfigModel = true
-      this.addConfig.name = params.name
     },
 		//增加取消
 		 addCancel () {
@@ -218,10 +283,12 @@ export default {
 	 update (params) {
       this.updateConfigModel = true
      //获取修改实体
-      this.axiosbusiness.get(this,{
-         url:'/config/'+params.configId,
-         list:'updateConfig'
+     if(params.configId){
+       this.axiosbusiness.get(this,{
+         url:'/config/load?configId='+params.configId,
+         data:'updateConfig'
          })
+     }
     },
 		//修改取消
 		 updateCancel () {
@@ -269,6 +336,7 @@ export default {
   },
   created () {
     this.getList();
+    console.log(1111)
   },
   mounted () {
 

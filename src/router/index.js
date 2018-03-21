@@ -17,19 +17,14 @@ import AccountLevel from '@/components/main/account/AccountLevel'
 import AccountParent from '@/components/main/account/AccountParent'
 import Account from '@/components/main/account/Account'
 import Withdrawals from '@/components/main/account/Withdrawals'
-import VipNumber from '@/components/main/vip/VipNumber'
 import Finance from '@/components/main/finance/Finance'
 import FinanceRecord from '@/components/main/finance/FinanceRecord'
 import Integral from '@/components/main/integral/Integral'
 import IntegralDetail from '@/components/main/integral/IntegralDetail'
 import IntegralBoard from '@/components/main/integral/IntegralBoard'
-import Vip from '@/components/main/vip/Vip'
-import VipGrowthRecord from '@/components/main/vip/VipGrowthRecord'
 import Order from '@/components/main/order/Order'
 import Config from '@/components/main/config/Config'
-import Feedback from '@/components/main/config/Feedback'
 import Notice from '@/components/main/config/Notice'
-import AppVersion from '@/components/main/config/AppVersion'
 import TeamPurchaseInfo from '@/components/main/teamPurchaseInfo/TeamPurchaseInfo'
 
 
@@ -128,11 +123,6 @@ export default new Router({
           component: Withdrawals
         },
         {
-          path: 'vipNumber',
-          name: 'vip购买次数',
-          component: VipNumber
-        },
-        {
           path: 'finance/:accountId',
           name: '财务',
           component: Finance
@@ -158,16 +148,6 @@ export default new Router({
           component: IntegralBoard
         },
         {
-          path: 'vip/:accountId',
-          name: 'vip',
-          component: Vip
-        },
-        {
-          path: 'vipGrowthRecord/:accountId',
-          name: 'vip成长记录',
-          component: VipGrowthRecord
-        },
-        {
           path: 'teamPurchaseInfo/:accountId',
           name: '团购信息',
           component: TeamPurchaseInfo
@@ -184,21 +164,9 @@ export default new Router({
         }
         ,
         {
-          path: 'feedback',
-          name: '意见反馈',
-          component: Feedback
-        }
-        ,
-        {
           path: 'notice',
           name: '通知',
           component: Notice
-        }
-        ,
-        {
-          path: 'appVersion',
-          name: 'app版本',
-          component: AppVersion
         }
       ]
     }

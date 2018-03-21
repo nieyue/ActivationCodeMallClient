@@ -35,10 +35,6 @@
           <Input type="password" v-model="addAccount.password" placeholder="密码">
           </Input>
         </FormItem>
-        <FormItem prop="contactPhone" label="联系手机号:">
-          <Input type="text" v-model="addAccount.contactPhone" placeholder="联系手机号">
-          </Input>
-        </FormItem>
         <FormItem prop="nickname" label="昵称:">
           <Input type="text" v-model="addAccount.nickname" placeholder="昵称">
           </Input>
@@ -57,15 +53,9 @@
               <Option v-for="item in sexList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="age" label="年龄:">
-          <InputNumber :max="200" :min="0"  :precision='0' v-model="addAccount.age"></InputNumber>
-        </FormItem>
         <FormItem prop="country" label="国家:">
           <Input type="text" v-model="addAccount.country" placeholder="国家">
           </Input>
-        </FormItem>
-        <FormItem prop="addProvinceCity" label="省和市:">
-          <Cascader :data="twoCityData"  @on-change="addProvinceAndCity"  trigger="hover"></Cascader>
         </FormItem>
         <FormItem prop="realname" label="真实姓名:">
           <Input type="text" v-model="addAccount.realname" placeholder="真实姓名">
@@ -75,18 +65,33 @@
           <Input type="text" v-model="addAccount.email" placeholder="email">
           </Input>
         </FormItem>
-        <FormItem prop="sign" label="签名:">
-           <Input type="textarea" v-model="addAccount.sign" :autosize="{minRows: 2,maxRows: 5}"  placeholder="签名">
-          </Input>
+        <FormItem prop="safetyGrade" label="安全等级:">
+          <Select v-model="addAccount.safetyGrade" transfer size="large" style="width:100px">
+              <Option v-for="item in safetyGradeList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
         </FormItem>
         <FormItem prop="auth" label="认证:">
           <Select v-model="addAccount.auth" transfer size="large" style="width:100px">
               <Option v-for="item in authList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
         </FormItem>
+        <FormItem prop="cardSecretReceive" label="卡密接受方式:">
+          <Select v-model="addAccount.cardSecretReceive" transfer size="large" style="width:100px">
+              <Option v-for="item in cardSecretReceiveList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
+        </FormItem>
          <FormItem prop="identityCards" label="身份证:">
           <Input type="text" v-model="addAccount.identityCards" placeholder="身份证">
           </Input>
+        </FormItem>
+        <FormItem prop="identityCardsHoldImg" label="手持身份证上半身照(上传或者填写):" id="addIdentityCardsHoldImgBox">
+          <Button type="primary" @click="addIdentityCardsHoldImgClick('addIdentityCardsHoldImg')" >上传</Button>
+          <input type="file" style="width:0px;height:0px;" id="addIdentityCardsHoldImg" ref="addIdentityCardsHoldImg">
+          <div>
+            <Input type="text" v-model="addAccount.identityCardsHoldImg" placeholder="手持身份证上半身照">
+          </Input>
+             <img :src="addAccount.identityCardsHoldImg"  style='width:300px;'alt="">
+          </div>
         </FormItem>
         <FormItem prop="identityCardsFrontImg" label="身份证正面(上传或者填写):" id="addIdentityCardsFrontImgBox">
           <Button type="primary" @click="addIdentityCardsFrontImgClick('addIdentityCardsFrontImg')" >上传</Button>
@@ -106,21 +111,10 @@
              <img :src="addAccount.identityCardsBackImg"  style='width:300px;'alt="">
           </div>
         </FormItem>
-        <FormItem prop="wechat" label="微信号:">
-          <Input type="text" v-model="addAccount.wechat" placeholder="微信号">
-          </Input>
-        </FormItem>
-        <FormItem prop="alipay" label="支付宝账号:">
-          <Input type="text" v-model="addAccount.alipay" placeholder="支付宝账号">
-          </Input>
-        </FormItem>
         <FormItem prop="status" label="状态:">
           <Select v-model="addAccount.status" transfer size="large" style="width:100px">
               <Option v-for="item in statusList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
-        </FormItem>
-        <FormItem prop="masterId" label="直接上级ID:">
-         <InputNumber  :min="1"  :precision='0' v-model="addAccount.masterId"></InputNumber>
         </FormItem>
         <FormItem prop="roleId" label="角色:">
           <Select v-model="addAccount.roleId" @on-change="addRoleChange" transfer size="large" style="width:100px">
@@ -149,14 +143,6 @@
           <Input type="text" v-model="updateAccount.phone" placeholder="注册手机号">
           </Input>
         </FormItem>
-        <!-- <FormItem prop="password" label="密码:">
-          <Input type="password" v-model="updateAccount.password" placeholder="密码">
-          </Input>
-        </FormItem> -->
-        <FormItem prop="contactPhone" label="联系手机号:">
-          <Input type="text" v-model="updateAccount.contactPhone" placeholder="联系手机号">
-          </Input>
-        </FormItem>
         <FormItem prop="nickname" label="昵称:">
           <Input type="text" v-model="updateAccount.nickname" placeholder="昵称">
           </Input>
@@ -175,15 +161,9 @@
               <Option v-for="item in sexList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="age" label="年龄:">
-          <InputNumber :max="200" :min="0"  :precision='0' v-model="updateAccount.age"></InputNumber>
-        </FormItem>
         <FormItem prop="country" label="国家:">
           <Input type="text" v-model="updateAccount.country" placeholder="国家">
           </Input>
-        </FormItem>
-        <FormItem prop="updateProvinceCity" label="省和市:">
-          <Cascader :data="twoCityData"  @on-change="updateProvinceAndCity" v-model="updateProvinceCity" trigger="hover"></Cascader>
         </FormItem>
         <FormItem prop="realname" label="真实姓名:">
           <Input type="text" v-model="updateAccount.realname" placeholder="真实姓名">
@@ -193,18 +173,33 @@
           <Input type="text" v-model="updateAccount.email" placeholder="email">
           </Input>
         </FormItem>
-        <FormItem prop="sign" label="签名:">
-           <Input type="textarea" v-model="updateAccount.sign" :autosize="{minRows: 2,maxRows: 5}"  placeholder="签名">
-          </Input>
+        <FormItem prop="safetyGrade" label="安全等级:">
+          <Select v-model="updateAccount.safetyGrade" transfer size="large" style="width:100px">
+              <Option v-for="item in safetyGradeList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
         </FormItem>
         <FormItem prop="auth" label="认证:">
           <Select v-model="updateAccount.auth" transfer size="large" style="width:100px">
               <Option v-for="item in authList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
         </FormItem>
+        <FormItem prop="cardSecretReceive" label="卡密接受方式:">
+          <Select v-model="updateAccount.cardSecretReceive" transfer size="large" style="width:100px">
+              <Option v-for="item in cardSecretReceiveList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
+        </FormItem>
          <FormItem prop="identityCards" label="身份证:">
           <Input type="text" v-model="updateAccount.identityCards" placeholder="身份证">
           </Input>
+        </FormItem>
+        <FormItem prop="identityCardsHoldImg" label="手持身份证上半身照(上传或者填写):" id="addIdentityCardsHoldImgBox">
+          <Button type="primary" @click="updateIdentityCardsHoldImgClick('updateIdentityCardsHoldImg')" >上传</Button>
+          <input type="file" style="width:0px;height:0px;" id="updateIdentityCardsHoldImg" ref="updateIdentityCardsHoldImg">
+          <div>
+            <Input type="text" v-model="updateAccount.identityCardsHoldImg" placeholder="手持身份证上半身照">
+          </Input>
+             <img :src="updateAccount.identityCardsHoldImg"  style='width:300px;'alt="">
+          </div>
         </FormItem>
         <FormItem prop="identityCardsFrontImg" label="身份证正面(上传或者填写):" id="updateIdentityCardsFrontImgBox">
           <Button type="primary" @click="updateIdentityCardsFrontImgClick('updateIdentityCardsFrontImg')" >上传</Button>
@@ -224,21 +219,10 @@
              <img :src="updateAccount.identityCardsBackImg"  style='width:300px;'alt="">
           </div>
         </FormItem>
-        <FormItem prop="wechat" label="微信号:">
-          <Input type="text" v-model="updateAccount.wechat" placeholder="微信号">
-          </Input>
-        </FormItem>
-        <FormItem prop="alipay" label="支付宝账号:">
-          <Input type="text" v-model="updateAccount.alipay" placeholder="支付宝账号">
-          </Input>
-        </FormItem>
         <FormItem prop="status" label="状态:">
           <Select v-model="updateAccount.status" transfer size="large" style="width:100px">
               <Option v-for="item in statusList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
-        </FormItem>
-        <FormItem prop="masterId" label="直接上级ID:">
-          <InputNumber  :min="1"  :precision='0' v-model="updateAccount.masterId"></InputNumber>
         </FormItem>
         <FormItem prop="roleId" label="角色:">
           <Select v-model="updateAccount.roleId" @on-change="updateRoleChange" transfer size="large" style="width:100px">
@@ -267,10 +251,6 @@ export default {
   name: 'Account',
   data () {
     return {
-        //二级联动数据
-        twoCityData:twocitylist.getTwoCity(),
-        //更新的接受省、市
-        updateProvinceCity:[],
         params:{
             startNum:1,//初始化个数
             currentPage:1,//当前页
@@ -298,11 +278,24 @@ export default {
         {id:1,value:'男性'},
         {id:2,value:'女性'}
         ],
+        //安全等级
+        safetyGradeList:[
+        {id:1,value:'低'},
+        {id:2,value:'中'},
+        {id:3,value:'高'}
+        ],
         //认证
         authList:[
         {id:0,value:'没认证'},
         {id:1,value:'审核中'},
         {id:2,value:'已认证'}
+        ],
+        //卡密接受方式
+        cardSecretReceiveList:[
+        {id:0,value:'全部接收'},
+        {id:1,value:'本账号内'},
+        {id:2,value:'邮箱接收'},
+        {id:3,value:'手机接收'}
         ],
       //状态
       statusList:[
@@ -356,12 +349,6 @@ export default {
           align:'center'
         },
         {
-        	title:'联系手机号',
-            key:'contactPhone',
-            width:100,
-          align:'center'
-        },
-        {
         	title:'昵称',
             key:'nickname',
             width:100,
@@ -399,20 +386,11 @@ export default {
           }
         },
         {
-        	title:'年龄',
-            key:'age',
-            width:100,
-          align:'center'
-        },
-        {
-        	title:'国家/省/市',
+        	title:'国家',
             width:100,
           align:'center',
           render: (h, params) => {
               let country=params.row.country||'';
-              let province=params.row.province||'';
-              let city=params.row.city||'';
-              let value=country+province+city;
               return h('span', value);  
           }
         },
@@ -427,6 +405,21 @@ export default {
             key:'email',
             width:100,
           align:'center'
+        },
+        {
+        	title:'安全等级',
+            key:'auth',
+            width:100,
+          align:'center',
+          render: (h, params) => {
+            let safetyGradevalue="";
+            this.safetyGradeList.forEach(element => {
+              if(element.id==params.row.safetyGrade){
+                safetyGradevalue=element.value;
+              }
+            });
+             return  h('span',safetyGradevalue);
+          }
         },
         {
         	title:'认证',
@@ -444,10 +437,41 @@ export default {
           }
         },
         {
+        	title:'卡密接受方式',
+            key:'auth',
+            width:100,
+          align:'center',
+          render: (h, params) => {
+            let cardSecretReceivevalue="";
+            this.cardSecretReceiveList.forEach(element => {
+              if(element.id==params.row.cardSecretReceive){
+                cardSecretReceivevalue=element.value;
+              }
+            });
+             return  h('span',cardSecretReceivevalue);
+          }
+        },
+        {
         	title:'身份证',
             key:'identityCards',
             width:100,
           align:'center'
+        },
+        {
+        	title:'手持身份证上半身照',
+            key:'identityCardsHoldImg',
+            width:100,
+          align:'center',
+          render: (h, params) => {
+            return h('img', {
+              attrs: {
+                src: params.row.identityCardsHoldImg
+              },
+              style: {
+                width: '45px'
+              }
+            })
+          }
         },
         {
         	title:'身份证正面',
@@ -480,18 +504,6 @@ export default {
               }
             })
           }
-        },
-         {
-        	title:'微信号',
-            key:'wechat',
-            width:100,
-          align:'center'
-        },
-         {
-        	title:'支付宝账号',
-            key:'alipay',
-            width:100,
-          align:'center'
         },
          {
         	title:'角色名',
@@ -536,34 +548,6 @@ export default {
           align:'center',
           render: (h, params) => {
             var marginstyle="2px"
-            var varhh=  h('Button', {
-                props: {
-                  type: 'ghost',
-                  size: 'small'
-                },
-                style: {
-                  margin: marginstyle
-                },
-                on: {
-                  click: () => {
-                     this.$router.push('/main/vip/'+params.row.accountId);
-                  }
-                }
-              }, 'vip');
-            var varhh1=  h('Button', {
-                props: {
-                  type: 'ghost',
-                  size: 'small'
-                },
-                style: {
-                  margin: marginstyle
-                },
-                on: {
-                  click: () => {
-                     this.$router.push('/main/vipGrowthRecord/'+params.row.accountId);
-                  }
-                }
-              }, 'vip成长');
             var varhh00=  h('Button', {
                 props: {
                   type: 'info',
@@ -620,20 +604,6 @@ export default {
                   }
                 }
               }, '积分详情');
-              var varhh30=  h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            style: {
-              margin: marginstyle
-            },
-            on: {
-              click: () => {
-                  this.$router.push('/main/teamPurchaseInfo/'+params.row.accountId);
-              }
-            }
-          }, '团购信息');
             var varhh20=  h('Button', {
                 props: {
                   type: 'primary',
@@ -669,15 +639,10 @@ export default {
           varhh11
         ]),
         h("div",[
-           varhh,
-          varhh1
-        ]),
-        h("div",[
            varhh00,
           varhh01
         ]),
         h("div",[
-           varhh30,
            varhh20
            //,varhh21
         ])
@@ -689,16 +654,6 @@ export default {
     }
   },
   methods: {
-    //增加中的二级联动省和市
-    addProvinceAndCity(value,label){
-        this.addAccount.province=label[0].label
-        this.addAccount.city=label[1].label
-    },
-    //更新中的二级联动省和市
-    updateProvinceAndCity(value,label){
-        this.updateAccount.province=label[0].label
-        this.updateAccount.city=label[1].label
-    },
     //增加中的 角色改变
     addRoleChange(roleId){
        this.roleList.forEach((e)=>{
@@ -729,6 +684,9 @@ export default {
      addIconClick(p){
          this.$refs[p].click();
        },
+     addIdentityCardsHoldImgClick(p){
+         this.$refs[p].click();
+       },
      addIdentityCardsFrontImgClick(p){
          this.$refs[p].click();
        },
@@ -737,6 +695,9 @@ export default {
        },
     //更新中的上传图片
      updateIconClick(p){
+         this.$refs[p].click();
+       },
+     updateIdentityCardsHoldImgClick(p){
          this.$refs[p].click();
        },
      updateIdentityCardsFrontImgClick(p){
@@ -757,7 +718,7 @@ export default {
      this.axiosbusiness.getList(this,{
        countUrl:'/role/count',
        listUrl:'/role/list',
-       list:'roleList',
+       data:'roleList',
        success:()=>{
            //初始化
         this.addAccount={
@@ -793,7 +754,7 @@ export default {
      this.axiosbusiness.getList(this,{
        countUrl:'/account/count',
        listUrl:'/account/list',
-       list:'accountList'
+       data:'accountList'
      },this.params)
     },
   //增加
@@ -832,8 +793,8 @@ export default {
       this.updateAccount.accountId = params.accountId
      //获取修改实体
       this.axiosbusiness.get(this,{
-          url:'/account/'+params.accountId,
-         list:'updateAccount',
+          url:'/account/load?accountId='+params.accountId,
+         data:'updateAccount',
          success:()=>{
             this.updateProvinceCity=twocitylist.getValueByLabel(this.updateAccount.province,this.updateAccount.city)
          }
@@ -892,6 +853,11 @@ export default {
       resource:'addAccount.icon'
     });
     this.utils.getQiniuSimpleUploader(this,{
+      browseButton:'addIdentityCardsHoldImg',
+      dropElement:'addIdentityCardsHoldImgBox',
+      resource:'addAccount.identityCardsHoldImg'
+    });
+    this.utils.getQiniuSimpleUploader(this,{
       browseButton:'addIdentityCardsFrontImg',
       dropElement:'addIdentityCardsFrontImgBox',
       resource:'addAccount.identityCardsFrontImg'
@@ -906,6 +872,11 @@ export default {
       browseButton:'updateIcon',
       dropElement:'updateIconBox',
       resource:'updateAccount.icon'
+    });
+    this.utils.getQiniuSimpleUploader(this,{
+      browseButton:'updateIdentityCardsHoldImg',
+      dropElement:'updateIdentityCardsHoldImgBox',
+      resource:'updateAccount.identityCardsHoldImg'
     });
     this.utils.getQiniuSimpleUploader(this,{
       browseButton:'updateIdentityCardsFrontImg',

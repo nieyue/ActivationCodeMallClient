@@ -46,7 +46,7 @@ export default {
   getQiniuToken($this,p) {
     $this.axiosbusiness.get($this,{
       url:p.url,
-      list:p.qiniuToken,
+      data:p.qiniuToken,
       success:()=>{ 
         if(typeof p.success=='function'){
         p.success();

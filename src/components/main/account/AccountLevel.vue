@@ -27,29 +27,11 @@
              <img :src="addAccountLevel.imgAddress "  style='width:30px;'alt="">
           </div>
         </FormItem>
-         <FormItem prop="teamPurchasePrice" label="团购金额:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.teamPurchasePrice"></InputNumber>
+         <FormItem prop="sellerUpgradeIntegral" label="商户升级积分:">
+          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.sellerUpgradeIntegral"></InputNumber>
         </FormItem>
-         <FormItem prop="recommendCommission" label="推荐佣金,默认是0表示不是推荐，无佣金:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.recommendCommission"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitReward" label="拆分奖励:">
-          <InputNumber :max="100000000" :min="0" :precision='2' v-model="addAccountLevel.splitReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitParentReward" label="拆分上级奖励:">
-          <InputNumber :max="100000000" :min="0" :precision='2' v-model="addAccountLevel.splitParentReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitPlatformReward" label="拆分平台奖励:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.splitPlatformReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="number" label="VIP名额，默认为0表示普通vip:">
-          <InputNumber :max="100000000" :min="0"  :precision='0' v-model="addAccountLevel.number"></InputNumber>
-        </FormItem>
-         <FormItem prop="discountPrice" label="优惠价格:">
-          <InputNumber :max="100000000" :min="0" :precision='2' v-model="addAccountLevel.discountPrice"></InputNumber>
-        </FormItem>
-         <FormItem prop="totalPrice" label="总价值:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.totalPrice"></InputNumber>
+         <FormItem prop="userUpgradeIntegral" label="用户升级积分:">
+          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="addAccountLevel.userUpgradeIntegral"></InputNumber>
         </FormItem>
          <FormItem prop="mark" label="备注（权益）">
             <Input v-model="addAccountLevel.mark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="备注（权益）"></Input>
@@ -87,29 +69,11 @@
              <img :src="updateAccountLevel.imgAddress"  style='width:30px;'alt="">
           </div>
         </FormItem>
-         <FormItem prop="teamPurchasePrice" label="团购金额:">
-          <InputNumber :max="100000000" :min="0" :precision='2' v-model="updateAccountLevel.teamPurchasePrice"></InputNumber>
+         <FormItem prop="sellerUpgradeIntegral" label="商户升级积分:">
+          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.sellerUpgradeIntegral"></InputNumber>
         </FormItem>
-         <FormItem prop="recommendCommission" label="推荐佣金,默认是0表示不是推荐，无佣金:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.recommendCommission"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitReward" label="拆分奖励:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.splitReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitParentReward" label="拆分上级奖励:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.splitParentReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="splitPlatformReward" label="拆分平台奖励:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.splitPlatformReward"></InputNumber>
-        </FormItem>
-         <FormItem prop="number" label="VIP名额，默认为0表示普通vip:">
-          <InputNumber :max="100000000" :min="0"  :precision='0' v-model="updateAccountLevel.number"></InputNumber>
-        </FormItem>
-         <FormItem prop="discountPrice" label="优惠价格:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.discountPrice"></InputNumber>
-        </FormItem>
-         <FormItem prop="totalPrice" label="总价值:">
-          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.totalPrice"></InputNumber>
+         <FormItem prop="userUpgradeIntegral" label="用户升级积分:">
+          <InputNumber :max="100000000" :min="0"  :precision='2' v-model="updateAccountLevel.userUpgradeIntegral"></InputNumber>
         </FormItem>
          <FormItem prop="mark" label="备注（权益）">
             <Input v-model="updateAccountLevel.mark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="备注（权益）"></Input>
@@ -210,50 +174,14 @@ export default {
           }
         },
         {
-        	title:'团购金额',
-            key:'teamPurchasePrice',
+        	title:'商户升级积分',
+            key:'sellerUpgradeIntegral',
             width:100,
             align:'center'
         },
         {
-        	title:'推荐佣金',
-            key:'recommendCommission',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'拆分奖励',
-            key:'splitReward',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'拆分上级奖励',
-            key:'splitParentReward',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'拆分平台奖励',
-            key:'splitPlatformReward',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'VIP名额',
-            key:'number',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'优惠价格',
-            key:'discountPrice',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'总价值',
-            key:'totalPrice',
+        	title:'用户升级积分',
+            key:'userUpgradeIntegral',
             width:100,
             align:'center'
         },
@@ -345,7 +273,7 @@ export default {
      this.axiosbusiness.getList(this,{
        countUrl:'/accountLevel/count',
        listUrl:'/accountLevel/list',
-       list:'accountLevelList'
+       data:'accountLevelList'
      },this.params)
     },
   //增加
@@ -386,8 +314,8 @@ export default {
 //console.log(this.updateAccountLevel) update (params) {
      //获取修改实体
       this.axiosbusiness.get(this,{
-         url:'/accountLevel/'+params.accountLevelId,
-         list:'updateAccountLevel',
+         url:'/accountLevel/load?accountLevelId='+params.accountLevelId,
+         data:'updateAccountLevel',
        })
     },
 		//修改取消

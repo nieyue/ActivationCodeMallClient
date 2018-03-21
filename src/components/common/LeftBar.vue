@@ -8,9 +8,7 @@
                         配置管理
                     </template>
                     <MenuItem name="/main/config">公共配置</MenuItem>
-                    <MenuItem name="/main/feedback">意见反馈</MenuItem>
                     <MenuItem name="/main/notice">通知</MenuItem>
-                    <MenuItem name="/main/appVersion">app版本</MenuItem>
                 </Submenu>
                 <Submenu name="article">
                     <template slot="title">
