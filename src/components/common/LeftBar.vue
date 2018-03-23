@@ -36,7 +36,6 @@
                         账户管理
                     </template>
                     <MenuItem name="/main/accountLevel">账户等级</MenuItem>
-                    <MenuItem name="/main/accountParent">账户上级</MenuItem>
                     <MenuItem name="/main/account">账户</MenuItem>
                     <MenuItem name="/main/withdrawals">提现管理</MenuItem>
                     <MenuItem name="/main/vipNumber">vip购买次数管理</MenuItem>
@@ -47,13 +46,6 @@
                         订单管理
                     </template>
                     <MenuItem name="/main/order">订单</MenuItem>
-                </Submenu>
-                <Submenu name="account">
-                    <template slot="title">
-                        <Icon type="earth"></Icon>
-                        积分管理
-                    </template>
-                    <MenuItem name="/main/integralBoard">积分排行榜</MenuItem>
                 </Submenu>
                 <!-- <Submenu name="finance">
                     <template slot="title">

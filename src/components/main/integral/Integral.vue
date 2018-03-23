@@ -37,23 +37,38 @@ export default {
           align:'center'
         },
         {
+        	title:'名称',
+            key:'name',
+            align:'center'
+        },
+        {
+        	title:'等级',
+            key:'level',
+            align:'center'
+        },
+        {
         	title:'剩余积分',
             key:'integral',
             align:'center'
         },
         {
-        	title:'充值积分',
-            key:'recharge',
+        	title:'升级积分',
+            key:'upgradeIntegral',
             align:'center'
         },
         {
-        	title:'消费金额',
+        	title:'消费积分',
             key:'consume',
             align:'center'
         },
         {
         	title:'赠送积分',
             key:'baseProfit',
+            align:'center'
+        },
+        {
+        	title:'账户id',
+            key:'accountId',
             align:'center'
         },
         {
@@ -85,13 +100,13 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
     this.params.accountId=this.$route.params.accountId
      this.axiosbusiness.getList(this,{
        countUrl:'/integral/count',
        listUrl:'/integral/list',
-       list:'integralList'
+       data:'integralList'
      },this.params)
     }
   },

@@ -239,7 +239,7 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
        countUrl:'/config/count',

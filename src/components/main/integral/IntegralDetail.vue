@@ -25,8 +25,7 @@ export default {
        * 
        */
       typeList:[
-        {id:0,value:'失去'},
-        {id:1,value:'获得'}
+        {id:1,value:'增长积分'}
       ],
 	    integralDetailList: [],
 	    integralDetailColumns: [
@@ -91,13 +90,13 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
     this.params.accountId=this.$route.params.accountId
      this.axiosbusiness.getList(this,{
        countUrl:'/integralDetail/count',
        listUrl:'/integralDetail/list',
-       list:'integralDetailList'
+       data:'integralDetailList'
      },this.params)
     }
   },

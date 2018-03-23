@@ -20,8 +20,8 @@ export default {
             url:p.countUrl,
             data:$this.Qs.stringify(params),
             withCredentials: true
-         }).
-         then(res => {
+        }).
+        then(res => {
             params.total=res.data;
             if(params.total<=0 ){
                 $this.$Message.info('暂无更多')
@@ -47,11 +47,11 @@ export default {
                     $this.$Message.error(res.data.msg)
                  }
                  }).catch(res => {
+                     $this.$Message.error('系统异常')
+                    })
+                }).catch(res => {
                     $this.$Message.error('系统异常')
-                 })
-         }).catch(res => {
-            $this.$Message.error('系统异常')
-         })
+                })
    },
     /**
      * 获取单个

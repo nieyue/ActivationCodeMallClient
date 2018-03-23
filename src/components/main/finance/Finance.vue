@@ -9,8 +9,8 @@
            :mask-closable="false"
     >
       <Form ref="updateFinance" :model="updateFinance" :label-width="100" label-position="right"  :rules="updateFinanceRules">
-       <FormItem prop="password" label="支付密码:">
-          <Input type="text" v-model="updateFinance.password" placeholder="支付密码">
+       <FormItem prop="password" label="提现密码:">
+          <Input type="text" v-model="updateFinance.password" placeholder="提现密码">
           </Input>
         </FormItem>
       </Form>
@@ -66,7 +66,7 @@ export default {
           align:'center'
         },
         {
-        	title:'支付密码',
+        	title:'提现密码',
             key:'password',
              width:100,
             align:'center',
@@ -99,32 +99,20 @@ export default {
             align:'center'
         },
         {
-        	title:'招收学员佣金',
-            key:'recruitingCommission',
+        	title:'退款金额',
+            key:'refund',
+            width:100,
+            align:'center'
+        },
+        {
+        	title:'冻结金额',
+            key:'frozen',
             width:100,
             align:'center'
         },
         {
         	title:'推荐佣金',
             key:'recommendCommission',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'团购账单',
-            key:'teamPurchasePrice',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'拆分奖励',
-            key:'splitReward',
-            width:100,
-            align:'center'
-        },
-        {
-        	title:'拆分上级奖励',
-            key:'splitParentReward',
             width:100,
             align:'center'
         },
@@ -169,7 +157,7 @@ export default {
                     this.update(params.row)
                   }
                 }
-              }, '修改支付密码');
+              }, '修改提现密码');
 			let s=h("div",[
               varhh1
             ]);
@@ -193,21 +181,21 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
     this.params.accountId=this.$route.params.accountId
      this.axiosbusiness.getList(this,{
        countUrl:'/finance/count',
        listUrl:'/finance/list',
-       list:'financeList'
+       data:'financeList'
      },this.params)
     },
 	 update (params) {
       this.updateFinanceModel = true
      //获取修改实体
       this.axiosbusiness.get(this,{
-         url:'/finance/'+params.financeId,
-         list:'updateFinance',
+         url:'/finance/load?financeId?='+params.financeId,
+         data:'updateFinance',
        })
     },
 		//修改取消

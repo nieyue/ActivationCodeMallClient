@@ -14,14 +14,14 @@ import VideoPlayRecord from '@/components/main/video/VideoPlayRecord'
 import VideoSetCollect from '@/components/main/video/VideoSetCollect'
 import Video from '@/components/main/video/Video'
 import AccountLevel from '@/components/main/account/AccountLevel'
-import AccountParent from '@/components/main/account/AccountParent'
 import Account from '@/components/main/account/Account'
+import BankCard from '@/components/main/account/BankCard'
+import Sincerity from '@/components/main/account/Sincerity'
 import Withdrawals from '@/components/main/account/Withdrawals'
 import Finance from '@/components/main/finance/Finance'
 import FinanceRecord from '@/components/main/finance/FinanceRecord'
 import Integral from '@/components/main/integral/Integral'
 import IntegralDetail from '@/components/main/integral/IntegralDetail'
-import IntegralBoard from '@/components/main/integral/IntegralBoard'
 import Order from '@/components/main/order/Order'
 import Config from '@/components/main/config/Config'
 import Notice from '@/components/main/config/Notice'
@@ -108,14 +108,19 @@ export default new Router({
           component: AccountLevel
         },
         {
-          path: 'accountParent',
-          name: '账户上级',
-          component: AccountParent
-        },
-        {
           path: 'account',
           name: '账户',
           component: Account
+        },
+        {
+          path: 'bankCard/:accountId',
+          name: '银行卡',
+          component: BankCard
+        },
+        {
+          path: 'sincerity/:accountId',
+          name: '诚信',
+          component: Sincerity
         },
         {
           path: 'withdrawals',
@@ -141,11 +146,6 @@ export default new Router({
           path: 'integralDetail/:accountId',
           name: '积分详情',
           component: IntegralDetail
-        },
-        {
-          path: 'integralBoard',
-          name: '积分排行榜',
-          component: IntegralBoard
         },
         {
           path: 'teamPurchaseInfo/:accountId',

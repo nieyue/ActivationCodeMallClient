@@ -20,31 +20,23 @@ export default {
             pageSize:10,//每页的个数
             total:0//总数
         },
-      //支付方式
+      //支付方式，1支付宝，2微信,3百度钱包,4Paypal,5网银
       methodList:[
         {id:1,value:'支付宝'},
         {id:2,value:'微信'},
-        {id:3,value:'余额'},
-        {id:4,value:'ios内购'}
+        {id:3,value:'百度钱包'},
+        {id:4,value:'Paypal'},
+        {id:5,value:'网银'}
       ],
       /**
-       *类型，1账户充值，2账户提现,3招收学员佣金,
-       4推荐佣金,5团购账单,6拆分账单,7二级团购奖励,8vip购买,
-       9分发奖励，10二级购买vip奖励,11付费课程购买
+       *类型，1购买商品，2账户提现，3退款，4诚信押金
        * 
        */
       typeList:[
-        {id:1,value:'账户充值'},
+        {id:1,value:'购买商品'},
         {id:2,value:'账户提现'},
-        {id:3,value:'招收学员佣金'},
-        {id:4,value:'推荐佣金'},
-        {id:5,value:'团购账单'},
-        {id:6,value:'拆分账单'},
-        {id:7,value:'二级团购奖励'},
-        {id:8,value:'vip购买'},
-        {id:9,value:'分发奖励'},
-        {id:10,value:'二级购买vip奖励'},
-        {id:11,value:'付费课程购买'},
+        {id:3,value:'退款'},
+        {id:4,value:'诚信押金'}
       ],
       //状态
       statusList:[
@@ -101,8 +93,18 @@ export default {
             align:'center'
         },
         {
+        	title:'手续费',
+            key:'brokerage',
+            align:'center'
+        },
+        {
         	title:'金额',
             key:'money',
+            align:'center'
+        },
+        {
+        	title:'实际金额',
+            key:'realMoney',
             align:'center'
         },
        {
@@ -148,13 +150,13 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
     this.params.accountId=this.$route.params.accountId
      this.axiosbusiness.getList(this,{
        countUrl:'/financeRecord/count',
        listUrl:'/financeRecord/list',
-       list:'financeRecordList'
+       data:'financeRecordList'
      },this.params)
     }
   },

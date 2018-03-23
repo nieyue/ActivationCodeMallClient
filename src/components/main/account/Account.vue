@@ -192,7 +192,7 @@
           <Input type="text" v-model="updateAccount.identityCards" placeholder="身份证">
           </Input>
         </FormItem>
-        <FormItem prop="identityCardsHoldImg" label="手持身份证上半身照(上传或者填写):" id="addIdentityCardsHoldImgBox">
+        <FormItem prop="identityCardsHoldImg" label="手持身份证上半身照(上传或者填写):" id="updateIdentityCardsHoldImgBox">
           <Button type="primary" @click="updateIdentityCardsHoldImgClick('updateIdentityCardsHoldImg')" >上传</Button>
           <input type="file" style="width:0px;height:0px;" id="updateIdentityCardsHoldImg" ref="updateIdentityCardsHoldImg">
           <div>
@@ -604,6 +604,35 @@ export default {
                   }
                 }
               }, '积分详情');
+            var varhh30=  h('Button', {
+                props: {
+                  type: 'ghost',
+                  size: 'small'
+                },
+                style: {
+                  margin: marginstyle
+                },
+                on: {
+                  click: () => {
+                    this.$router.push('/main/bankCard/'+params.row.accountId);
+                  }
+                }
+              }, '银行卡');
+            var varhh31=  h('Button', {
+                props: {
+                  type: 'ghost',
+                  size: 'small'
+                },
+                style: {
+                  margin: marginstyle
+                },
+                on: {
+                  click: () => {
+                    this.$router.push('/main/sincerity/'+params.row.accountId);
+                  }
+                }
+              }, '诚信');
+              
             var varhh20=  h('Button', {
                 props: {
                   type: 'primary',
@@ -641,6 +670,10 @@ export default {
         h("div",[
            varhh00,
           varhh01
+        ]),
+        h("div",[
+           varhh30,
+           varhh31
         ]),
         h("div",[
            varhh20
@@ -713,7 +746,7 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
        countUrl:'/role/count',
@@ -734,8 +767,8 @@ export default {
           if(e.name=='用户'){
             this.params.roleId=e.roleId
           }
-        })
-         this.getList();
+        }) 
+        this.getList();
        }
      },
      {  
@@ -749,7 +782,7 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
        countUrl:'/account/count',
