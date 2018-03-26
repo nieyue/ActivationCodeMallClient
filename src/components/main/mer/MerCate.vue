@@ -1,22 +1,23 @@
-<!--商品查询管理 -->
+<!--商品类型管理 -->
 <template>
     <div class="body-wrap">
     <div class="body-btn-wrap">
-      <Button type='primary'  @click='add'>增加商品查询</Button>
+      <Button type='primary'  @click='add'>增加商品类型</Button>
     </div>
 		 <!--新增 -->
-     <Modal v-model="addMerSearchModel"
-           title="新增商品查询管理"
+     <Modal v-model="addMerCateModel"
+           title="新增商品类型管理"
            :closable="false"
            :mask-closable="false"
     >
-      <Form ref="addMerSearch" :model="addMerSearch" :label-width="100" label-position="right"  :rules="addMerSearchRules">
-        <FormItem prop="name" label="商品搜索名称:">
-          <Input type="text" v-model="addMerSearch.name" placeholder="商品搜索名称">
+      <Form ref="addMerCate" :model="addMerCate" :label-width="100" label-position="right"  :rules="addMerCateRules">
+        <FormItem prop="name" label="名称:">
+          <Input type="text" v-model="addMerCate.name" placeholder="名称">
           </Input>
         </FormItem>
-        <FormItem prop="number" label="次数:">
-          <InputNumber :max="1000000000" :min="0"  :precision='0' v-model="addMerSearch.number"></InputNumber>
+        <FormItem prop="summary" label="简介:">
+          <Input type="textarea" v-model="addMerCate.summary" :autosize="{minRows: 2,maxRows: 5}"  placeholder="简介">
+          </Input>
         </FormItem>
       </Form>
       <div slot='footer'>
@@ -29,18 +30,19 @@
     </Modal>
     <!--新增end -->
 		 <!--修改 -->
-     <Modal v-model="updateMerSearchModel"
-           title="修改商品查询管理"
+     <Modal v-model="updateMerCateModel"
+           title="修改商品类型管理"
            :closable="false"
            :mask-closable="false"
     >
-      <Form ref="updateMerSearch" :model="updateMerSearch" :label-width="100" label-position="right"  :rules="updateMerSearchRules">
-        <FormItem prop="name" label="商品搜索名称:">
-          <Input type="text" v-model="updateMerSearch.name" placeholder="商品搜索名称">
+      <Form ref="updateMerCate" :model="updateMerCate" :label-width="100" label-position="right"  :rules="updateMerCateRules">
+        <FormItem prop="name" label="名称:">
+          <Input type="text" v-model="updateMerCate.name" placeholder="名称">
           </Input>
         </FormItem>
-        <FormItem prop="number" label="次数:">
-          <InputNumber :max="1000000000" :min="0"  :precision='0' v-model="updateMerSearch.number"></InputNumber>
+         <FormItem prop="summary" label="简介:">
+          <Input type="textarea" v-model="updateMerCate.summary" :autosize="{minRows: 2,maxRows: 5}"  placeholder="简介">
+          </Input>
         </FormItem>
       </Form>
       <div slot='footer'>
@@ -52,7 +54,7 @@
       </div>
     </Modal>
     <!--修改end -->
-      <Table border  :columns='merSearchColumns' :data='merSearchList' ref='table' size="small"></Table>
+      <Table border  :columns='merCateColumns' :data='merCateList' ref='table' size="small"></Table>
         <div style='display: inline-block;float: right; margin-top:10px;'>
         <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'   @on-change='selectPage' show-elevator ></Page>
       </div>
@@ -61,7 +63,7 @@
 </template>
 <script>
 export default {
-  name: 'MerSearch',
+  name: 'MerCate',
   data () {
     return {
         params:{
@@ -72,28 +74,28 @@ export default {
             total:0//总数
         },
 			//增加参数
-			addMerSearchModel:false,
+			addMerCateModel:false,
 			addLoading:false,
-			addMerSearchRules: {
+			addMerCateRules: {
                 name: [
-                    {required: true, message: '商品搜索名称为必填项', trigger: 'blur'}
+                    {required: true, message: '名称为必填项', trigger: 'blur'}
                     ]
                 },
-			addMerSearch:{
+			addMerCate:{
 			},
 			//修改参数
-			updateMerSearchModel:false,
+			updateMerCateModel:false,
 			updateLoading:false,
-			updateMerSearchRules: {
+			updateMerCateRules: {
                 name: [
-                    {required: true, message: '商品搜索名称为必填项', trigger: 'blur'}
+                    {required: true, message: '名称为必填项', trigger: 'blur'}
                     ]
                 },
-			updateMerSearch:{},
+			updateMerCate:{},
       //删除参数
-      deleteMerSearch:{},
-	    merSearchList: [],
-	    merSearchColumns: [
+      deleteMerCate:{},
+	    merCateList: [],
+	    merCateColumns: [
         {
           title: '序号',
           align:'center',
@@ -103,19 +105,25 @@ export default {
           }
         },
         {
-          title: '商品查询id',
-          key: 'merSearchId',
+          title: '商品类型id',
+          key: 'merCateId',
           align:'center'
         },
         {
-        	title:'商品搜索名称',
+        	title:'名称',
             key:'name',
             align:'center'
         },
         {
-        	title:'次数',
-            key:'number',
-            align:'center'
+        	title:'简介',
+            key:'summary',
+            align:'center',
+             render: (h, params) => {
+                 var summary=params.row.summary==null?'':params.row.summary.length>=20?params.row.summary.substring(0,20)+"...":params.row.summary.substring(0);
+              // console.log(summary.toString())
+                var varhh1=  h('span',summary);
+              return varhh1;  
+             }
         },
         {
           title:'修改时间',
@@ -184,20 +192,20 @@ export default {
      * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
-       countUrl:'/merSearch/count',
-       listUrl:'/merSearch/list',
-       data:'merSearchList'
+       countUrl:'/merCate/count',
+       listUrl:'/merCate/list',
+       data:'merCateList'
      },this.params)
     },
   //增加
 	 add (params) {
-      this.addMerSearchModel = true
+      this.addMerCateModel = true
     },
 		//增加取消
 		 addCancel () {
       if (!this.addLoading) {
-        this.addMerSearchModel = false
-        this.$refs.addMerSearch.resetFields()
+        this.addMerCateModel = false
+        this.$refs.addMerCate.resetFields()
       }
     },
 		//增加确定
@@ -212,26 +220,26 @@ export default {
      * p.showModel 界面模型显示隐藏
      */
     this.axiosbusiness.add(this,{
-      ref:'addMerSearch',
-      url:'/merSearch/add',
-      requestObject:'addMerSearch',
+      ref:'addMerCate',
+      url:'/merCate/add',
+      requestObject:'addMerCate',
       loading:'addLoading',
-      showModel:'addMerSearchModel'
+      showModel:'addMerCateModel'
     })
     },
 	 update (params) {
-      this.updateMerSearchModel = true
+      this.updateMerCateModel = true
      //获取修改实体
       this.axiosbusiness.get(this,{
-         url:'/merSearch/load?merSearchId='+params.merSearchId,
-         data:'updateMerSearch',
+         url:'/merCate/load?merCateId='+params.merCateId,
+         data:'updateMerCate',
        })
     },
 		//修改取消
 		 updateCancel () {
       if (!this.updateLoading) {
-        this.updateMerSearchModel = false
-        this.$refs.updateMerSearch.resetFields()
+        this.updateMerCateModel = false
+        this.$refs.updateMerCate.resetFields()
       }
     },
 		//修改确定
@@ -246,11 +254,11 @@ export default {
      * p.showModel 界面模型显示隐藏
      */
     this.axiosbusiness.update(this,{
-      ref:'updateMerSearch',
-      url:'/merSearch/update',
-      requestObject:'updateMerSearch',
+      ref:'updateMerCate',
+      url:'/merCate/update',
+      requestObject:'updateMerCate',
       loading:'updateLoading',
-      showModel:'updateMerSearchModel'
+      showModel:'updateMerCateModel'
     })
  
     },
@@ -262,12 +270,12 @@ export default {
      * p.url 修改url
      * p.requestObject 请求参数对象
      */
-    this.deleteMerSearch={
-      "merSearchId":params.merSearchId
+    this.deleteMerCate={
+      "merCateId":params.merCateId
     };
     this.axiosbusiness.delete(this,{
-      url:'/merSearch/delete',
-      requestObject:'deleteMerSearch'
+      url:'/merCate/delete',
+      requestObject:'deleteMerCate'
     })
     }
   },

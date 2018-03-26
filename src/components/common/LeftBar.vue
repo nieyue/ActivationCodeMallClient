@@ -18,6 +18,16 @@
                     <MenuItem name="/main/articleCate">文章类型</MenuItem>
                     <MenuItem name="/main/article">文章</MenuItem>
                 </Submenu>
+                <Submenu name="mer">
+                    <template slot="title">
+                        <Icon type="pizza"></Icon>
+                        商品管理
+                    </template>
+                    <MenuItem name="/main/merSearch">商品搜索</MenuItem>
+                    <MenuItem name="/main/merCommon">商品公用</MenuItem>
+                    <MenuItem name="/main/merCate">商品类型</MenuItem>
+                    <MenuItem name="/main/mer">商品</MenuItem>
+                </Submenu>
                 <Submenu name="video">
                     <template slot="title">
                         <Icon type="social-youtube-outline"></Icon>

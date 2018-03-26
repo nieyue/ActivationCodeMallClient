@@ -294,7 +294,7 @@ export default {
 		 updateCancel () {
       if (!this.updateLoading) {
         this.updateConfigModel = false
-        this.$refs.updateConfig.resetFields()
+       // this.$refs.updateConfig.resetFields()
       }
     },
 		//修改确定

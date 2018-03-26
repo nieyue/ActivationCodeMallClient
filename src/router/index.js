@@ -5,6 +5,10 @@ import Main from '@/components/main/Main'
 import ArticleCate from '@/components/main/article/ArticleCate'
 import Article from '@/components/main/article/Article'
 import ArticleComment from '@/components/main/article/ArticleComment'
+import MerSearch from '@/components/main/mer/MerSearch'
+import MerCommon from '@/components/main/mer/MerCommon'
+import MerCate from '@/components/main/mer/MerCate'
+import Mer from '@/components/main/mer/Mer'
 import VideoSetCate from '@/components/main/video/VideoSetCate'
 import VideoSetSearch from '@/components/main/video/VideoSetSearch'
 import VideoSet from '@/components/main/video/VideoSet'
@@ -56,6 +60,26 @@ export default new Router({
           path: 'article',
           name: '文章',
           component: Article,
+        },
+        {
+          path: 'merSearch',
+          name: '商品搜索',
+          component: MerSearch
+        },
+        {
+          path: 'merCommon',
+          name: '商品公用',
+          component: MerCommon
+        },
+        {
+          path: 'merCate',
+          name: '商品类型',
+          component: MerCate
+        },
+        {
+          path: 'mer',
+          name: '商品',
+          component: Mer
         },
         {
           path: 'articleComment/:articleId',

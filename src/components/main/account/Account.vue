@@ -391,7 +391,7 @@ export default {
           align:'center',
           render: (h, params) => {
               let country=params.row.country||'';
-              return h('span', value);  
+              return h('span', country);  
           }
         },
         {
@@ -919,7 +919,7 @@ export default {
     this.utils.getQiniuSimpleUploader(this,{
       browseButton:'updateIdentityCardsBackImg',
       dropElement:'updateIdentityCardsBackImgBox',
-      resource:'updateAccount.IdentityCardsBackImg'
+      resource:'updateAccount.identityCardsBackImg'
     });
   },
   mounted () {
