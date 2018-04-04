@@ -79,7 +79,7 @@ import TopBar from '@/components/common/TopBar'
       getValidCode(){
         this.axios({
           method:"post",
-          url:'/getVerificationCode',
+          url:'/tool/getVerificationCode',
           withCredentials: true,  
           responseType:'blob'
           })
@@ -110,6 +110,7 @@ import TopBar from '@/components/common/TopBar'
               this.loading = false
               if (res.data.code === 200) {
                 this.$Message.success(res.data.msg)
+                sessionStorage.setItem("account",JSON.stringify(res.data.data[0]))
                 this.$router.push('/main/config')
               } else {
                 this.$Message.error(res.data.msg)
