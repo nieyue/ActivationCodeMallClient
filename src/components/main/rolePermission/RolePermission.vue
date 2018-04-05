@@ -1,6 +1,13 @@
 <!--角色权限管理 -->
 <template>
     <div class="body-wrap">
+    <div v-if="roleIsSuperAdmin">
+      <Alert type="success" style="text-align:center">
+      拥有所有权限
+      </Alert>
+    </div>
+
+    <div v-else-if="!roleIsSuperAdmin" >
     <Alert type="success">
         <p>范围:</p>
         <p>公共,（代表拥有此权限的人可以访问此接口的数据，包含非自身，即是其他账户接口的数据）</p>
@@ -21,6 +28,7 @@
            title="新增角色权限管理"
            :closable="false"
            :mask-closable="false"
+           width="1000px"
     >
       <Form ref="addRolePermission" :model="addRolePermission" :label-width="100" label-position="right"  :rules="addRolePermissionRules">
         <FormItem prop="permissionId" label="权限:">
@@ -50,14 +58,18 @@
            title="修改角色权限管理"
            :closable="false"
            :mask-closable="false"
+           width="1000px"
     >
       <Form ref="updateRolePermission" :model="updateRolePermission" :label-width="100" label-position="right"  :rules="updateRolePermissionRules">
-        <FormItem prop="permissionId" label="权限:">
+        <!-- <FormItem prop="permissionId" label="权限:">
         <RadioGroup v-model="updateRolePermission.permissionId" type="button" >
             <Radio style="margin:5px;border-left:1px solid #dddee1" :label="item.permissionId" v-for="item in permissionList" :value="item.permissionId" :key="item.permissionId" >
                 {{item.name}}
             </Radio>
         </RadioGroup>
+        </FormItem> -->
+        <FormItem prop="permissionId" label="权限:">
+          <span  v-for="value,key in updateRolePermission.permission" :value="value" :key="key" v-if="key=='name'" v-text="value"></span>
         </FormItem>
         <FormItem prop="region" label="范围:">
           <Select v-model="updateRolePermission.region" transfer size="large" style="width:100px">
@@ -77,14 +89,19 @@
       <Table border  :columns='rolePermissionColumns' :data='rolePermissionList' ref='table' size="small"></Table>
     </div>
     
+  </div>
 </template>
 <script>
 export default {
   name: 'RolePermission',
   data () {
     return {
+      //当前角色
+        role:{},
+       //角色是否超级管理员,默认不是
+        roleIsSuperAdmin:false,
         params:{
-            startNum:1,//初始化个数
+          startNum:1,//初始化个数
             currentPage:1,//当前页
             pageNum:1,//获取的第几个开始
             pageSize:100000000,//每页的个数
@@ -118,14 +135,15 @@ export default {
                     ]
                 },
 			addRolePermission:{
+        region:2
 			},
 			//修改参数
 			updateRolePermissionModel:false,
 			updateLoading:false,
 			updateRolePermissionRules: {
-                permissionId: [
-                    {type:"number",required: true, message: '权限为必选项', trigger: 'change'}
-                    ],
+                // permissionId: [
+                //     {type:"number",required: true, message: '权限为必选项', trigger: 'change'}
+                //     ],
                 region: [
                     {type:"number",required: true, message: '范围为必选项', trigger: 'change'}
                     ]
@@ -239,7 +257,7 @@ export default {
               }, '删除');
             	var s=h("div","");
 			s=h("div",[
-             // varhh1,
+              varhh1,
               varhh2
             ]);
             return s;
@@ -258,6 +276,22 @@ export default {
       this.params.currentPage=currentPage;
       this.params.pageNum = (this.params.currentPage-1)*this.params.pageSize+this.params.startNum;
       this.getList()
+    },
+    //根据角色id获取角色
+    getRoleByRoleId(){
+       //获取修改实体
+      this.axiosbusiness.get(this,{
+         url:'/role/load?roleId='+this.$route.params.roleId,
+         data:'role',
+         success:()=>{
+           if(this.role.name=="超级管理员"){
+             this.roleIsSuperAdmin=true
+           }else{
+              this.getPermissionList();
+           }
+           //console.error( this.roleIsSuperAdmin)
+         }
+       })
     },
     //获取权限总表
     getPermissionList(){
@@ -288,15 +322,14 @@ export default {
        success:()=>{
            //如果已有权限不显示permissionList里面
            this.permissionList.forEach((p)=>{
+             if(this.rolePermissionList.length>0){
                this.rolePermissionList.forEach((rp)=>{
-                    if(p.permissionId==rp.permissionId){
-                        this.permissionList.splice(this.permissionList.indexOf(p),1);
+                 if(p.permissionId==rp.permissionId){
+                   this.permissionList.splice(this.permissionList.indexOf(p),1);
                     }
                })
+             }
            })
-           this.addRolePermission={
-               region:1
-           }
        }
      },this.params)
     },
@@ -358,6 +391,8 @@ export default {
      * p.loading loading
      * p.showModel 界面模型显示隐藏
      */
+    //修改必须去掉permission
+    delete this.updateRolePermission.permission;
     this.axiosbusiness.update(this,{
       ref:'updateRolePermission',
       url:'/rolePermission/update',
@@ -385,7 +420,7 @@ export default {
     }
   },
   created () {
-    this.getPermissionList();
+    this.getRoleByRoleId();
   },
   mounted () {
 

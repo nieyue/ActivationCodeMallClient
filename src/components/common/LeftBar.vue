@@ -83,28 +83,19 @@
     data () {
       return {
           //是否超级管理员,默认不是
-          isSuperAdmin:false,
+          isSuperAdmin:this.business.getIsSuperAdmin(),
           //活动的菜单，即显示菜单
           menuActiveName:'/main/articeCate'
        
       }
     },
     methods: {
-     //判断是否超级管理员，是就显示账户管理
-    getIsSuperAdmin(){
-    if(sessionStorage.getItem("account")){
-        let account=JSON.parse(sessionStorage.getItem("account"));
-        if(account.role.name=="超级管理员"){
-            this.isSuperAdmin=true;
-        }
-    } 
-    },
      menuSelect(name){
          this.$router.push(name);
      }
     },
     created(){
-     this.getIsSuperAdmin();
+    //this.isSuperAdmin= this.business.getIsSuperAdmin();
     //监听点击返回
     this.Hub.$on('routerChange', (msg) => { //Hub接收事件
         //this.msg = 'hehe';

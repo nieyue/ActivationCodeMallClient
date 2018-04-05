@@ -12,16 +12,18 @@ import Qs from 'qs'
 import wangeditor from 'wangeditor'
 import Qiniu from 'qiniu-js/dist/qiniu.min.js'
 import axiosbusiness from "@/components/service/axiosbusiness"
+import business from "@/components/service/business"
 
 Vue.config.productionTip = false
-axios.defaults.baseURL="http://192.168.7.111:9000";
+//axios.defaults.baseURL="http://192.168.7.111:9000";
 //axios.defaults.baseURL="http://118.190.133.146:9000";
-//axios.defaults.baseURL="http://app.jiehao9.com";
+axios.defaults.baseURL="http://app.jiehao9.com";
 axios.defaults.headers["Content-Type"]="application/x-www-form-urlencoded";
 Vue.prototype.Qs=Qs
 Vue.prototype.utils=utils
 Vue.prototype.wangeditor=wangeditor
 Vue.prototype.axiosbusiness=axiosbusiness
+Vue.prototype.business=business
 Vue.use(VueAxios, axios)
 Vue.use(iView)
 //全局监听事件

@@ -38,7 +38,8 @@ import RolePermission from '@/components/main/rolePermission/RolePermission'
 
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({
+ // export default new Router({
   routes: [
     {
       path: '/',
@@ -204,49 +205,40 @@ export default new Router({
         {
           path: 'role',
           name: '角色',
-          component: Role,
-          beforeEnter: (to, from, next) => {
-              //判断是否超级管理员，是就显示账户管理
-              if(sessionStorage.getItem("account")){
-                let account=JSON.parse(sessionStorage.getItem("account"));
-                if(account.role.name=="超级管理员"){
-                  next(true)
-                }
-              }
-             }
+          component: Role
         },
         {
           path: 'permission',
           name: '权限',
-          component: Permission,
-          beforeEnter: (to, from, next) => {
-              //判断是否超级管理员，是就显示账户管理
-              if(sessionStorage.getItem("account")){
-                let account=JSON.parse(sessionStorage.getItem("account"));
-                if(account.role.name=="超级管理员"){
-                  next(true)
-                }
-              }
-             }
+          component: Permission
         },
         {
           path: 'rolePermission/:roleId',
           name: '角色权限',
-          component: RolePermission,
-          beforeEnter: (to, from, next) => {
-              //判断是否超级管理员，是就显示账户管理
-              if(sessionStorage.getItem("account")){
-                let account=JSON.parse(sessionStorage.getItem("account"));
-                if(account.role.name=="超级管理员"){
-                  next(true)
-                }
-              }
-             }
+          component: RolePermission
         }
       ]
     }
   ]
 })
-// this.$router.beforeEach((to, from, next) => {
-//   console.log(to)
-// })
+router.beforeEach((to, from, next) => {
+  if(to.fullPath.indexOf("role")>0
+  ||to.fullPath.indexOf("permission")>0
+  ||to.fullPath.indexOf("rolePermission")>0){
+    //判断是否超级管理员，是就显示账户管理
+    if(sessionStorage.getItem("account")){
+      let account=JSON.parse(sessionStorage.getItem("account"));
+      if(account.role.name=="超级管理员"){
+        next()
+      }else{
+        next(false)
+      }
+    }
+  }else{
+
+    next()
+  }
+
+  
+})
+export default router
