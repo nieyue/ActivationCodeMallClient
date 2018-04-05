@@ -28,8 +28,12 @@ import Integral from '@/components/main/integral/Integral'
 import IntegralDetail from '@/components/main/integral/IntegralDetail'
 import Order from '@/components/main/order/Order'
 import Config from '@/components/main/config/Config'
+import Banner from '@/components/main/config/Banner'
 import Notice from '@/components/main/config/Notice'
 import TeamPurchaseInfo from '@/components/main/teamPurchaseInfo/TeamPurchaseInfo'
+import Role from '@/components/main/rolePermission/Role'
+import Permission from '@/components/main/rolePermission/Permission'
+import RolePermission from '@/components/main/rolePermission/RolePermission'
 
 
 Vue.use(Router)
@@ -185,14 +189,64 @@ export default new Router({
           path: 'config',
           name: '公共配置',
           component: Config
+        },
+        {
+          path: 'banner',
+          name: 'banner',
+          component: Banner
         }
         ,
         {
           path: 'notice',
           name: '通知',
           component: Notice
+        },
+        {
+          path: 'role',
+          name: '角色',
+          component: Role,
+          beforeEnter: (to, from, next) => {
+              //判断是否超级管理员，是就显示账户管理
+              if(sessionStorage.getItem("account")){
+                let account=JSON.parse(sessionStorage.getItem("account"));
+                if(account.role.name=="超级管理员"){
+                  next(true)
+                }
+              }
+             }
+        },
+        {
+          path: 'permission',
+          name: '权限',
+          component: Permission,
+          beforeEnter: (to, from, next) => {
+              //判断是否超级管理员，是就显示账户管理
+              if(sessionStorage.getItem("account")){
+                let account=JSON.parse(sessionStorage.getItem("account"));
+                if(account.role.name=="超级管理员"){
+                  next(true)
+                }
+              }
+             }
+        },
+        {
+          path: 'rolePermission/:roleId',
+          name: '角色权限',
+          component: RolePermission,
+          beforeEnter: (to, from, next) => {
+              //判断是否超级管理员，是就显示账户管理
+              if(sessionStorage.getItem("account")){
+                let account=JSON.parse(sessionStorage.getItem("account"));
+                if(account.role.name=="超级管理员"){
+                  next(true)
+                }
+              }
+             }
         }
       ]
     }
   ]
 })
+// this.$router.beforeEach((to, from, next) => {
+//   console.log(to)
+// })

@@ -8,6 +8,7 @@
                         配置管理
                     </template>
                     <MenuItem name="/main/config">公共配置</MenuItem>
+                    <MenuItem name="/main/banner">banner</MenuItem>
                     <MenuItem name="/main/notice">通知</MenuItem>
                 </Submenu>
                 <Submenu name="article">
@@ -57,6 +58,14 @@
                     </template>
                     <MenuItem name="/main/order">订单</MenuItem>
                 </Submenu>
+                <Submenu v-if="isSuperAdmin" name="rolePermission">
+                    <template slot="title">
+                        <Icon type="person-stalker"></Icon>
+                        角色权限管理
+                    </template>
+                    <MenuItem name="/main/role">角色</MenuItem>
+                    <MenuItem name="/main/permission">权限</MenuItem>
+                </Submenu>
                 <!-- <Submenu name="finance">
                     <template slot="title">
                         <Icon type="social-yen"></Icon>
@@ -73,17 +82,29 @@
     name: 'LeftBar',
     data () {
       return {
+          //是否超级管理员,默认不是
+          isSuperAdmin:false,
           //活动的菜单，即显示菜单
           menuActiveName:'/main/articeCate'
        
       }
     },
     methods: {
+     //判断是否超级管理员，是就显示账户管理
+    getIsSuperAdmin(){
+    if(sessionStorage.getItem("account")){
+        let account=JSON.parse(sessionStorage.getItem("account"));
+        if(account.role.name=="超级管理员"){
+            this.isSuperAdmin=true;
+        }
+    } 
+    },
      menuSelect(name){
          this.$router.push(name);
      }
     },
     created(){
+     this.getIsSuperAdmin();
     //监听点击返回
     this.Hub.$on('routerChange', (msg) => { //Hub接收事件
         //this.msg = 'hehe';
