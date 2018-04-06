@@ -272,7 +272,9 @@ export default {
                     {required: true, message: '名称为必填项', trigger: 'blur'}
                     ]
                 },
-			addMer:{},
+			addMer:{
+        imgAddress:''
+      },
 			//修改参数
 			updateMerModel:false,
 			updateLoading:false,
@@ -511,10 +513,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                     this.$router.push('/main/finance/'+params.row.MerId);
+                     this.$router.push('/main/merCardCipher/'+params.row.merId);
                   }
                 }
-              }, '财务');
+              }, '商品卡密');
             var varhh01=  h('Button', {
                 props: {
                   type: 'info',
@@ -525,10 +527,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                     this.$router.push('/main/financeRecord/'+params.row.MerId);
+                     this.$router.push('/main/merNotice/'+params.row.merId);
                   }
                 }
-              }, '财务记录');
+              }, '商品公告');
             var varhh10=  h('Button', {
                 props: {
                   type: 'dashed',
@@ -539,10 +541,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                     this.$router.push('/main/integral/'+params.row.MerId);
+                     this.$router.push('/main/merImg/'+params.row.merId);
                   }
                 }
-              }, '积分');
+              }, '商品图片');
             var varhh11=  h('Button', {
                 props: {
                   type: 'dashed',
@@ -691,6 +693,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+    this.params.pageSize=1000000;
      this.axiosbusiness.getList(this,{
        countUrl:'/merCate/count',
        listUrl:'/merCate/list',
@@ -711,9 +714,7 @@ export default {
         this.getList();
        }
      },
-     {  
-       pageNum:1,
-       pageSize:1000})
+    this.params)
     },
   //获取列表
    getList () {
@@ -724,6 +725,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+     this.params.pageSize=10;
      this.axiosbusiness.getList(this,{
        countUrl:'/mer/count',
        listUrl:'/mer/list',
@@ -740,7 +742,7 @@ export default {
     this.addMer.details=html;
     }
     addMerDetailsEditor.create();
-    addMerDetailsEditor.txt.html('<p>输入内容...😆</p>')
+    addMerDetailsEditor.txt.html('<p>输入内容...</p>')
   //wangeditor七牛云上传图片预加载
   this.utils.getQiniuSimpleUploader(this,{
     browseButton:addMerDetailsEditor.imgMenuId,
@@ -758,7 +760,7 @@ export default {
     this.addMer.configuration=html;
     }
     addMerConfigurationEditor.create();
-    addMerConfigurationEditor.txt.html('<p>输入内容...😆</p>')
+    addMerConfigurationEditor.txt.html('<p>输入内容...</p>')
   //wangeditor七牛云上传图片预加载
   this.utils.getQiniuSimpleUploader(this,{
     browseButton:addMerConfigurationEditor.imgMenuId,
@@ -776,7 +778,7 @@ export default {
     this.addMer.installActivation=html;
     }
     addMerInstallActivationEditor.create();
-    addMerInstallActivationEditor.txt.html('<p>输入内容...😆</p>')
+    addMerInstallActivationEditor.txt.html('<p>输入内容...</p>')
   //wangeditor七牛云上传图片预加载
   this.utils.getQiniuSimpleUploader(this,{
     browseButton:addMerInstallActivationEditor.imgMenuId,

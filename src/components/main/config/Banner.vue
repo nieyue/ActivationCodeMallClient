@@ -158,6 +158,7 @@ export default {
                     ],
                 },
 			addBanner:{
+        imgAddress:''
 			},
 			//修改参数
 			updateBannerModel:false,
@@ -421,13 +422,13 @@ export default {
     this.utils.getQiniuSimpleUploader(this,{
       browseButton:'addImgAddress',
       dropElement:'addImgAddressBox',
-      resource:'addBanner.link'
+      resource:'addBanner.imgAddress'
     });
     //修改上传图片预加载
     this.utils.getQiniuSimpleUploader(this,{
       browseButton:'updateImgAddress',
       dropElement:'updateImgAddressBox',
-      resource:'updateBanner.link'
+      resource:'updateBanner.imgAddress'
     });
   },
   mounted () {

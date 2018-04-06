@@ -116,6 +116,7 @@ export default {
                     ]
                 },
 			addAccountLevel:{
+        imgAddress:''
 			},
 			//修改参数
 			updateAccountLevelModel:false,

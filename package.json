@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "iview": "^2.8.0",
+    "iview": "^2.12.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "qiniu-js": "^1.0.24",

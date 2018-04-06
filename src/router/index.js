@@ -9,6 +9,9 @@ import MerSearch from '@/components/main/mer/MerSearch'
 import MerCommon from '@/components/main/mer/MerCommon'
 import MerCate from '@/components/main/mer/MerCate'
 import Mer from '@/components/main/mer/Mer'
+import MerCardCipher from '@/components/main/mer/MerCardCipher'
+import MerNotice from '@/components/main/mer/MerNotice'
+import MerImg from '@/components/main/mer/MerImg'
 import VideoSetCate from '@/components/main/video/VideoSetCate'
 import VideoSetSearch from '@/components/main/video/VideoSetSearch'
 import VideoSet from '@/components/main/video/VideoSet'
@@ -85,6 +88,21 @@ const router= new Router({
           path: 'mer',
           name: '商品',
           component: Mer
+        },
+        {
+          path: 'merCardCipher/:merId',
+          name: '商品卡密',
+          component: MerCardCipher
+        },
+        {
+          path: 'merNotice/:merId',
+          name: '商品公告',
+          component: MerNotice
+        },
+        {
+          path: 'merImg/:merId',
+          name: '商品图片',
+          component: MerImg
         },
         {
           path: 'articleComment/:articleId',

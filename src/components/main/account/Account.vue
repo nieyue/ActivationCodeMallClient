@@ -311,7 +311,12 @@ export default {
                     {required: true, message: '注册手机号为必填项', trigger: 'blur'}
                     ]
                 },
-			addAccount:{},
+			addAccount:{
+        icon:'',
+        identityCardsHoldImg:'',
+        identityCardsFrontImg:'',
+        identityCardsBackImg:''
+      },
 			//修改参数
 			updateAccountModel:false,
 			updateLoading:false,
@@ -748,6 +753,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+    this.params.pageSize=1000000;
      this.axiosbusiness.getList(this,{
        countUrl:'/role/count',
        listUrl:'/role/list',
@@ -771,9 +777,7 @@ export default {
         this.getList();
        }
      },
-     {  
-       pageNum:1,
-       pageSize:1000})
+    this.params)
     },
   //获取列表
    getList () {
@@ -784,6 +788,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+    this.params.pageSize=10
      this.axiosbusiness.getList(this,{
        countUrl:'/account/count',
        listUrl:'/account/list',

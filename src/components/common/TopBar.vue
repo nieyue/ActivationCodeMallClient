@@ -33,7 +33,7 @@
     data () {
       return {
         islogin:false,
-        account:{},
+        account:{}
       }
     },
     methods: {

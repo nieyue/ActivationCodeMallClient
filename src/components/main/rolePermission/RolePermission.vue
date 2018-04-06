@@ -279,7 +279,6 @@ export default {
     },
     //根据角色id获取角色
     getRoleByRoleId(){
-       //获取修改实体
       this.axiosbusiness.get(this,{
          url:'/role/load?roleId='+this.$route.params.roleId,
          data:'role',

@@ -25,6 +25,10 @@
           <Input type="text" v-model="addArticle.subtitle" placeholder="子标题">
           </Input>
         </FormItem>
+        <FormItem prop="resource" label="来源:">
+          <Input type="text" v-model="addArticle.resource" placeholder="来源">
+          </Input>
+        </FormItem>
         <FormItem prop="imgAddress" label="封面(上传或者填写):" id="addImgAddressBox">
           <Button type="primary" @click="addImgAddressClick('addImgAddress')" >上传</Button>
           <input type="file" style="width:0px;height:0px;" id="addImgAddress" ref="addImgAddress">
@@ -77,6 +81,10 @@
           <Input type="text" v-model="updateArticle.subtitle" placeholder="子标题">
           </Input>
         </FormItem>
+        <FormItem prop="resource" label="来源:">
+          <Input type="text" v-model="updateArticle.resource" placeholder="来源">
+          </Input>
+        </FormItem>
         <FormItem prop="imgAddress" label="封面(上传或者填写):" id="updateImgAddressBox">
           <Button type="primary" @click="updateImgAddressClick('updateImgAddress')" >上传</Button>
           <input type="file" style="width:0px;height:0px;" id="updateImgAddress" ref="updateImgAddress">
@@ -108,7 +116,7 @@
       </div>
     </Modal>
     <!--修改end -->
-      <Table border :columns='articleColumns' :data='articleList' ref='table' size="small"></Table>
+      <Table border height="600" :columns='articleColumns' :data='articleList' ref='table' size="small"></Table>
         <div style='display: inline-block;float: right; margin-top:10px;'>
         <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'  @on-change='selectPage' show-elevator ></Page>
       </div>
@@ -157,14 +165,6 @@ export default {
                     ]
                 },
 			updateArticle:{
-           "articleId":'',
-           "title":"",
-           "subtitle":"",
-           "imgAddress":"",
-    		   "redirectUrl":"",
-    		   "status":1,
-    		   "content":"",
-    		   "articleCateId":""
       },
       //删除参数
       deleteArticle:{},
@@ -200,6 +200,11 @@ export default {
         	key:'subtitle',
           align:'center'
         },
+        {
+        	title:'来源',
+        	key:'resource',
+          align:'center'
+        },
          {
         	title:'封面',
         	key:'imgAddress',
@@ -221,25 +226,9 @@ export default {
           align:'center'
         },
         {
-        	title:'评论数',
-        	key:'commentNumber',
-          align:'center',
-          render: (h, params) => {
-              return  h('div', [
-              h('span', params.row.commentNumber),
-              h('Button', {
-                props: {
-                  type: 'info',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.$router.push('/main/articleComment/'+params.row.articleId);
-                  }
-                }
-              }, '详情')
-            ])
-          }
+        	title:'阅读数',
+        	key:'readingNumber',
+          align:'center'
         },
         {
         	title:'状态',
@@ -335,14 +324,13 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+     this.params.pageSize=1000000;
      this.axiosbusiness.getList(this,{
        countUrl:'/articleCate/count',
        listUrl:'/articleCate/list',
        data:'articleCateList'
      },
-     {  
-       pageNum:1,
-       pageSize:1000})
+    this.params)
     },
   //获取列表
    getList () {
@@ -353,6 +341,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
+      this.params.pageSize=10
      this.axiosbusiness.getList(this,{
        countUrl:'/article/count',
        listUrl:'/article/list',
@@ -362,15 +351,14 @@ export default {
   //增加
 	 add (params) {
       this.addArticleModel = true
-  let Editor=this.wangeditor;
-  let editor=new Editor("#addEditor")
-  editor.customConfig.zIndex = 100
-console.log(editor)
-  editor.customConfig.onchange = (html) =>{
-    this.addArticle.content=html;
+    let Editor=this.wangeditor;
+    let editor=new Editor("#addEditor")
+    editor.customConfig.zIndex = 100
+    editor.customConfig.onchange = (html) =>{
+      this.addArticle.content=html;
     }
     editor.create();
-    editor.txt.html('<p>输入内容...😆</p>')
+    editor.txt.html('<p>输入内容...</p>')
   //wangeditor七牛云上传图片预加载
   this.utils.getQiniuSimpleUploader(this,{
     browseButton:editor.imgMenuId,
