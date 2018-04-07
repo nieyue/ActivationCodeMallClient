@@ -8,6 +8,7 @@
     </Alert>
     <div class="body-btn-wrap">
         <Button type='primary'  @click='add'>增加权限</Button>
+        <Button type='error'  @click='god'>一键更新到最新</Button>
         <div class="search-wrap">
             <Select v-model="params.type" transfer class="search-wrap-input"  placeholder="权限类型，全部">
                 <Option v-for="item in typeParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
@@ -251,6 +252,22 @@ export default {
     }
   },
   methods: {
+    //一键更新到最新
+    god(){
+      this.axios({
+          method:"post",
+          url:'/permission/init',
+          withCredentials: true,  
+          })
+        .then((res)=>{
+          console.log(res.data);
+            this.$Message.success("成功")
+
+        }).catch((error)=>{
+            console.log(error);
+            this.$Message.error("错误")
+         });
+    },
       //查询
     search(){
       this.getList()

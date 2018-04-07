@@ -320,15 +320,28 @@ export default {
        data:'rolePermissionList',
        success:()=>{
            //如果已有权限不显示permissionList里面
-           this.permissionList.forEach((p)=>{
-             if(this.rolePermissionList.length>0){
-               this.rolePermissionList.forEach((rp)=>{
-                 if(p.permissionId==rp.permissionId){
-                   this.permissionList.splice(this.permissionList.indexOf(p),1);
+          //let deletePermissionList=[];
+          //  this.permissionList.forEach((p)=>{
+          //    if(this.rolePermissionList.length>0){
+          //      this.rolePermissionList.forEach((rp)=>{
+          //        if(p.permissionId==rp.permissionId){
+          //          console.error(JSON.stringify(p))
+          //          deletePermissionList.push(p);
+          //         // this.permissionList.splice(this.permissionList.indexOf(p),1);
+          //           }
+          //      })
+          //    }
+          //  })
+           let pll=this.permissionList.length;
+           for(let i=0;i<pll;i++){
+             for(let j=0;j<this.rolePermissionList.length;j++){
+                if(this.permissionList[i].permissionId==this.rolePermissionList[j].permissionId){
+                   this.permissionList.splice(i,1);
+                    pll--;
+                    i--;
                     }
-               })
-             }
-           })
+              }
+           }
        }
      },this.params)
     },
