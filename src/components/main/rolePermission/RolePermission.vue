@@ -15,6 +15,9 @@
     </Alert>
     <div class="body-btn-wrap">
         <Button type='primary'  @click='add'>增加角色权限</Button>
+        <Button type='warning'  @click='addAllPublicPermission'>一键添加所有公共权限</Button>
+        <Button type='info'  @click='addAllSelfPermission'>一键添加所有自身权限</Button>
+        <Button type='error'  @click='delAllPermission'>一键删除所有权限</Button>
         <div class="search-wrap">
             <Select v-model="params.region" transfer class="search-wrap-input"  placeholder="范围，全部">
                 <Option v-for="item in regionParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
@@ -267,6 +270,87 @@ export default {
     }
   },
   methods: {
+    //一键添加所有公共权限
+    addAllPublicPermission(){
+      let pll=this.permissionList.length;
+           for(let i=0;i<pll;i++){
+             setTimeout(()=>{
+               this.addRolePermission.roleId=this.$route.params.roleId
+              this.addRolePermission.region=1//公共
+              this.addRolePermission.permissionId=this.permissionList[i].permissionId
+               this.axios({
+                method:"post",
+                url:'/rolePermission/add',
+                data:this.Qs.stringify(this.addRolePermission),
+                withCredentials: true
+                }).then(res => {
+                  if (res.data.code === 200) {
+                    if(i==pll-1){
+                      this.$Message.success(res.data.msg)
+                      this.getList()
+                    }
+                } else {
+                  this.$Message.error(res.data.msg)
+                }
+              }).catch(res => {
+                  this.$Message.error(res.data.msg)
+              })
+             },100*i)
+           }
+
+    },
+    //一键添加所有自身权限
+    addAllSelfPermission(){
+   let pll=this.permissionList.length;
+           for(let i=0;i<pll;i++){
+             setTimeout(()=>{
+               this.addRolePermission.roleId=this.$route.params.roleId
+              this.addRolePermission.region=2//自身
+              this.addRolePermission.permissionId=this.permissionList[i].permissionId
+               this.axios({
+                method:"post",
+                url:'/rolePermission/add',
+                data:this.Qs.stringify(this.addRolePermission),
+                withCredentials: true
+                }).then(res => {
+                  if (res.data.code === 200) {
+                    if(i==pll-1){
+                      this.$Message.success(res.data.msg)
+                      this.getList()
+                    }
+                } else {
+                  this.$Message.error(res.data.msg)
+                }
+              }).catch(res => {
+                  this.$Message.error(res.data.msg)
+              })
+             },100*i)
+           }
+    },
+    //一键删除所有权限
+    delAllPermission(){
+      let rpll=this.rolePermissionList.length;
+           for(let i=0;i<rpll;i++){
+              setTimeout(()=>{
+              this.axios({
+                      method:"post",
+                      url:'/rolePermission/delete?rolePermissionId='+this.rolePermissionList[i].rolePermissionId,
+                      withCredentials: true
+                      }).then(res => {
+                      if (res.data.code === 200) {
+                        if(i==rpll-1){
+                        this.$Message.success(res.data.msg)
+                          this.getList();
+                        }
+                      }else {
+                        this.$Message.error(res.data.msg)
+                      }
+                    }).catch(res => {
+                      this.$Message.error(res.data.msg)
+                    })
+                    },100*i)
+           }
+    },
       //查询
     search(){
       this.getList()
@@ -320,25 +404,15 @@ export default {
        data:'rolePermissionList',
        success:()=>{
            //如果已有权限不显示permissionList里面
-          //let deletePermissionList=[];
-          //  this.permissionList.forEach((p)=>{
-          //    if(this.rolePermissionList.length>0){
-          //      this.rolePermissionList.forEach((rp)=>{
-          //        if(p.permissionId==rp.permissionId){
-          //          console.error(JSON.stringify(p))
-          //          deletePermissionList.push(p);
-          //         // this.permissionList.splice(this.permissionList.indexOf(p),1);
-          //           }
-          //      })
-          //    }
-          //  })
            let pll=this.permissionList.length;
            for(let i=0;i<pll;i++){
              for(let j=0;j<this.rolePermissionList.length;j++){
-                if(this.permissionList[i].permissionId==this.rolePermissionList[j].permissionId){
-                   this.permissionList.splice(i,1);
+               if(this.permissionList[i].permissionId==this.rolePermissionList[j].permissionId){
+            // console.error(this.permissionList)
+                 this.permissionList.splice(i,1);
                     pll--;
                     i--;
+                    break;//完成必须跳出当前循环，不然局部对象为undefined找不到
                     }
               }
            }

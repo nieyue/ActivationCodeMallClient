@@ -251,6 +251,7 @@ export default {
   name: 'Account',
   data () {
     return {
+      routerPath:this.$route.path,
         params:{
             startNum:1,//初始化个数
             currentPage:1,//当前页
@@ -710,6 +711,8 @@ export default {
     },
     //查询
     search(){
+      this.params.currentPage=1;
+      this.params.pageNum =1;
       this.getList()
     },
     //分页点击
@@ -746,6 +749,7 @@ export default {
        },
   //获取列表
    getRoleList () {
+
      /**
      * 获取列表
      * $this  vue组件
@@ -769,11 +773,52 @@ export default {
             roleId:this.roleList[0].roleId,
             roleName:this.roleList[0].name
         };
-     this.roleList.forEach((e)=>{
-          if(e.name=='用户'){
-            this.params.roleId=e.roleId
+        let rll=this.roleList.length;
+        for(let i=0;i<rll;i++){
+            //如果当前管理员非超级管理员
+              if(!this.business.getIsSuperAdmin()
+              &&this.roleList[i].name!="用户" 
+              &&this.roleList[i].name!="商户"
+              &&this.roleList[i].name!="推广户"){
+                this.roleList.splice(i,1)
+              rll--;
+              i--;
+              }
+              //路径为管理员账户
+       else if(this.routerPath=="/main/account/managerAccount"){
+          if(this.roleList[i].name=='用户'
+          ||this.roleList[i].name=='商户'
+          ||this.roleList[i].name=='推广户'){
+           this.roleList.splice(i,1);
+            rll--;
+            i--;
           }
-        }) 
+          //路径为用户账户
+       }else if(this.routerPath=="/main/account/userAccount"){
+          if(this.roleList[i].name!='用户'){
+             this.roleList.splice(i,1);
+            rll--;
+            i--;
+          }
+          }
+          else if(this.routerPath=="/main/account/spreadAccount"){
+          if(this.roleList[i].name!='推广户'){
+             this.roleList.splice(i,1);
+            rll--;
+            i--;
+          }
+          }
+          else if(this.routerPath=="/main/account/sellerAccount"){
+          if(this.roleList[i].name!='商户'){
+             this.roleList.splice(i,1);
+            rll--;
+            i--;
+          }
+          }
+        }
+        if(this.roleList[0] &&this.roleList[0].roleId){
+          this.params.roleId=this.roleList[0].roleId;
+        }
         this.getList();
        }
      },
@@ -882,6 +927,13 @@ export default {
     })
     }
   },
+   watch: {
+      $route (to,from){
+        //console.error(this.routerPath)
+        this.routerPath=this.$route.path;
+        this.getRoleList();
+      }
+    },
   created () {
     this.getRoleList();
     //增加中的上传图片预加载

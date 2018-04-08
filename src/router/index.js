@@ -160,6 +160,33 @@ const router= new Router({
           component: Account
         },
         {
+          path: 'account',
+          name: '账户',
+          component: Account,
+          children:[
+            {
+              path: 'managerAccount',
+              name: '管理员账户',
+              component: Account
+            },
+            {
+              path: 'userAccount',
+              name: '用户账户',
+              component: Account
+            },
+            {
+              path: 'spreadAccount',
+              name: '推广户账户',
+              component: Account
+            },
+            {
+              path: 'sellerAccount',
+              name: '商户账户',
+              component: Account
+            }
+          ]
+        },
+        {
           path: 'bankCard/:accountId',
           name: '银行卡',
           component: BankCard

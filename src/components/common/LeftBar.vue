@@ -29,25 +29,16 @@
                     <MenuItem name="/main/merCate">商品类型</MenuItem>
                     <MenuItem name="/main/mer">商品</MenuItem>
                 </Submenu>
-                <Submenu name="video">
-                    <template slot="title">
-                        <Icon type="social-youtube-outline"></Icon>
-                        视频管理
-                    </template>
-                    <MenuItem name="/main/videoSetSearch">视频集搜索</MenuItem>
-                    <MenuItem name="/main/videoSetCate">视频集类型</MenuItem>
-                    <MenuItem name="/main/videoSet">视频集</MenuItem>
-                    <MenuItem name="/main/videoCache">视频缓存</MenuItem>
-                    <MenuItem name="/main/videoPlayRecord">视频播发记录</MenuItem>
-                    <MenuItem name="/main/videoSetCollect">视频集收藏</MenuItem>
-                </Submenu>
                 <Submenu name="account">
                     <template slot="title">
                         <Icon type="person"></Icon>
                         账户管理
                     </template>
                     <MenuItem name="/main/accountLevel">账户等级</MenuItem>
-                    <MenuItem name="/main/account">账户</MenuItem>
+                    <!-- <MenuItem name="/main/account">账户</MenuItem> -->
+                    <MenuItem name="/main/account/userAccount">用户账户</MenuItem> 
+                    <MenuItem name="/main/account/spreadAccount">推广户账户</MenuItem> 
+                    <MenuItem name="/main/account/sellerAccount">商户账户</MenuItem> 
                     <MenuItem name="/main/withdrawals">提现管理</MenuItem>
                     <MenuItem name="/main/vipNumber">vip购买次数管理</MenuItem>
                 </Submenu>
@@ -73,7 +64,13 @@
                     </template>
                     <MenuItem name="/main/Withdrawals">提现管理</MenuItem>
                 </Submenu> -->
-                
+                <Submenu v-if="isSuperAdmin" name="managerAccount">
+                    <template slot="title">
+                        <Icon type="person-stalker"></Icon>
+                        管理员管理
+                    </template>
+                    <MenuItem name="/main/account/managerAccount">管理员管理</MenuItem>
+                </Submenu>
             </Menu>
         </Sider>
 </template>

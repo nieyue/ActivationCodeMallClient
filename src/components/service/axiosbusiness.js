@@ -38,7 +38,7 @@ export default {
         }).
         then(res => {
             params.total=res.data;
-           // console.error(params)
+            //console.error(params)
             if(params.total<=0 ){
                 $this.$Message.info('暂无更多')
                 $this[p.data]=[]
@@ -53,19 +53,20 @@ export default {
                  then(res => {
                  console.log(res)
                  if (res.data.code == 200) {
-                     console.log(res.data)
                      //变量list代替所有
                      $this[p.data]=res.data.data;
                      if(typeof p.success=='function'){
-                        p.success( $this[p.data]);
+                         p.success( $this[p.data]);
+                        }
+                    } else {
+                        $this.$Message.error(res.data.msg)
                     }
-                 } else {
-                    $this.$Message.error(res.data.msg)
-                 }
-                 }).catch(res => {
-                     $this.$Message.error('系统异常')
-                    })
                 }).catch(res => {
+                   // console.log(res)
+                    $this.$Message.error('系统异常')
+                })
+            }).catch(res => {
+               // console.log(222222)
                     $this.$Message.error('系统异常')
                 })
    },
