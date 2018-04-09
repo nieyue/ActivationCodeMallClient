@@ -101,6 +101,8 @@ export default {
     return {
       //当前角色
         role:{},
+        //临时permission
+        permission:{},
        //角色是否超级管理员,默认不是
         roleIsSuperAdmin:false,
         params:{
@@ -272,6 +274,7 @@ export default {
   methods: {
     //一键添加所有公共权限
     addAllPublicPermission(){
+      this.$Spin.show();
       let pll=this.permissionList.length;
            for(let i=0;i<pll;i++){
              setTimeout(()=>{
@@ -279,7 +282,7 @@ export default {
               this.addRolePermission.region=1//公共
               this.addRolePermission.permissionId=this.permissionList[i].permissionId
                this.axios({
-                method:"post",
+                 method:"post",
                 url:'/rolePermission/add',
                 data:this.Qs.stringify(this.addRolePermission),
                 withCredentials: true
@@ -288,6 +291,7 @@ export default {
                     if(i==pll-1){
                       this.$Message.success(res.data.msg)
                       this.getList()
+                      this.$Spin.hide();
                     }
                 } else {
                   this.$Message.error(res.data.msg)
@@ -301,6 +305,7 @@ export default {
     },
     //一键添加所有自身权限
     addAllSelfPermission(){
+      this.$Spin.show();
    let pll=this.permissionList.length;
            for(let i=0;i<pll;i++){
              setTimeout(()=>{
@@ -317,6 +322,7 @@ export default {
                     if(i==pll-1){
                       this.$Message.success(res.data.msg)
                       this.getList()
+                      this.$Spin.hide();
                     }
                 } else {
                   this.$Message.error(res.data.msg)
@@ -329,6 +335,7 @@ export default {
     },
     //一键删除所有权限
     delAllPermission(){
+      this.$Spin.show();
       let rpll=this.rolePermissionList.length;
            for(let i=0;i<rpll;i++){
               setTimeout(()=>{
@@ -341,6 +348,8 @@ export default {
                         if(i==rpll-1){
                         this.$Message.success(res.data.msg)
                           this.getList();
+                          this.$Spin.hide();
+                          location.reload();
                         }
                       }else {
                         this.$Message.error(res.data.msg)
@@ -501,7 +510,18 @@ export default {
     };
     this.axiosbusiness.delete(this,{
       url:'/rolePermission/delete',
-      requestObject:'deleteRolePermission'
+      requestObject:'deleteRolePermission',
+      success:()=>{
+       //获取删除实体，添加到增加角色列表中
+      this.axiosbusiness.get(this,{
+         url:'/permission/load?permissionId='+params.permissionId,
+         data:'permission',
+         success:()=>{
+           this.permissionList.push(this.permission)
+           this.getList()
+         }
+       })
+      }
     })
     }
   },

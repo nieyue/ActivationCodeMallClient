@@ -254,6 +254,7 @@ export default {
   methods: {
     //一键更新到最新
     god(){
+      this.$Spin.show();
       this.axios({
           method:"post",
           url:'/permission/init',
@@ -261,7 +262,9 @@ export default {
           })
         .then((res)=>{
           console.log(res.data);
+            this.$Spin.hide();
             this.$Message.success("成功")
+
 
         }).catch((error)=>{
             console.log(error);

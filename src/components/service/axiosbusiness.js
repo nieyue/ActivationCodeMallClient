@@ -108,6 +108,7 @@ export default {
      * p.requestObject 请求参数对象
      * p.loading loading
      * p.addModel 界面模型显示隐藏
+     * p.success 成功回调
      */
     add($this,p){
         $this.$refs[p.ref].validate((valid) => {
@@ -122,7 +123,11 @@ export default {
                 if (res.data.code === 200) {
                     $this[p.showModel] = false
                     $this.$refs[p.ref].resetFields()
-                    $this.getList()
+                    if(typeof p.success=='function'){
+                        p.success();
+                    }else{
+                        $this.getList()
+                    }
               } else {
                 $this.$Message.error(res.data.msg)
               }
@@ -144,6 +149,7 @@ export default {
      * p.requestObject 请求参数对象
      * p.loading loading
      * p.showModel 界面模型显示隐藏
+     * p.success 成功回调
      */
     update($this,p){
         $this.$refs[p.ref].validate((valid) => {
@@ -158,7 +164,11 @@ export default {
                 if (res.data.code === 200) {
                     $this[p.showModel] = false
                     $this.$Message.success(res.data.msg)
-                    $this.getList()
+                    if(typeof p.success=='function'){
+                        p.success();
+                    }else{
+                        $this.getList()
+                    }
                 }else {
                     $this.$Message.error(res.data.msg)
                 }
@@ -177,6 +187,7 @@ export default {
      * $this  vue组件
      * p.url 修改url
      * p.requestObject 请求参数对象
+     * p.success 成功回调
      */
     delete($this,p){
         $this.$Modal.confirm({
@@ -191,7 +202,11 @@ export default {
                       }).then(res => {
                       if (res.data.code === 200) {
                         $this.$Message.success(res.data.msg)
-                        $this.getList();
+                        if(typeof p.success=='function'){
+                            p.success();
+                        }else{
+                            $this.getList()
+                        }
                       }else {
                         $this.$Message.error(res.data.msg)
                       }
