@@ -1,22 +1,19 @@
-<!--视频集搜索管理 -->
+<!--推广链接项管理 -->
 <template>
     <div class="body-wrap">
     <div class="body-btn-wrap">
-      <Button type='primary'  @click='add'>增加视频集搜索</Button>
+      <Button type='primary'  @click='add'>增加推广链接项</Button>
     </div>
 		 <!--新增 -->
-     <Modal v-model="addVideoSetSearchModel"
-           title="新增视频集搜索管理"
+     <Modal v-model="addSpreadLinkTermModel"
+           title="新增推广链接项管理"
            :closable="false"
            :mask-closable="false"
     >
-      <Form ref="addVideoSetSearch" :model="addVideoSetSearch" :label-width="100" label-position="right"  :rules="addVideoSetSearchRules">
-        <FormItem prop="name" label="名称:">
-          <Input type="text" v-model="addVideoSetSearch.name" placeholder="名称">
+      <Form ref="addSpreadLinkTerm" :model="addSpreadLinkTerm" :label-width="100" label-position="right"  :rules="addSpreadLinkTermRules">
+        <FormItem prop="link" label="链接:">
+          <Input type="text" v-model="addSpreadLinkTerm.link" placeholder="链接,http或https开头">
           </Input>
-        </FormItem>
-        <FormItem prop="number" label="次数:">
-         <InputNumber :max="100000000" :min="1" :step="1" :precision='0' v-model="addVideoSetSearch.number"></InputNumber>
         </FormItem>
       </Form>
       <div slot='footer'>
@@ -29,18 +26,15 @@
     </Modal>
     <!--新增end -->
 		 <!--修改 -->
-     <Modal v-model="updateVideoSetSearchModel"
-           title="修改视频集搜索管理"
+     <Modal v-model="updateSpreadLinkTermModel"
+           title="修改推广链接项管理"
            :closable="false"
            :mask-closable="false"
     >
-      <Form ref="updateVideoSetSearch" :model="updateVideoSetSearch" :label-width="100" label-position="right"  :rules="updateVideoSetSearchRules">
-        <FormItem prop="name" label="名称:">
-          <Input type="text" v-model="updateVideoSetSearch.name" placeholder="名称">
+      <Form ref="updateSpreadLinkTerm" :model="updateSpreadLinkTerm" :label-width="100" label-position="right"  :rules="updateSpreadLinkTermRules">
+         <FormItem prop="link" label="链接:">
+          <Input type="text" v-model="updateSpreadLinkTerm.link" placeholder="链接,http或https开头">
           </Input>
-        </FormItem>
-        <FormItem prop="number" label="次数:">
-         <InputNumber :max="100000000" :min="1" :step="1" :precision='0' v-model="updateVideoSetSearch.number"></InputNumber>
         </FormItem>
       </Form>
       <div slot='footer'>
@@ -52,7 +46,7 @@
       </div>
     </Modal>
     <!--修改end -->
-      <Table border :columns='videoSetSearchColumns' :data='videoSetSearchList' ref='table' size="small"></Table>
+      <Table border  :columns='spreadLinkTermColumns' :data='spreadLinkTermList' ref='table' size="small"></Table>
         <div style='display: inline-block;float: right; margin-top:10px;'>
         <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'   @on-change='selectPage' show-elevator ></Page>
       </div>
@@ -61,7 +55,7 @@
 </template>
 <script>
 export default {
-  name: 'VideoSetSearch',
+  name: 'SpreadLinkTerm',
   data () {
     return {
         params:{
@@ -72,40 +66,28 @@ export default {
             total:0//总数
         },
 			//增加参数
-			addVideoSetSearchModel:false,
+			addSpreadLinkTermModel:false,
 			addLoading:false,
-			addVideoSetSearchRules: {
-                name: [
-                    {required: true, message: '名称为必填项', trigger: 'blur'}
-                    ],
-                number: [
-                    {type:'number',required: true, message: '次数为必填项', trigger: 'blur'}
+			addSpreadLinkTermRules: {
+                link: [
+                    {required: true, message: '链接为必填项', trigger: 'blur'}
                     ]
                 },
-			addVideoSetSearch:{
-    		   name:"",
-    		   number:1
+			addSpreadLinkTerm:{
 			},
 			//修改参数
-			updateVideoSetSearchModel:false,
+			updateSpreadLinkTermModel:false,
 			updateLoading:false,
-			updateVideoSetSearchRules: {
-                name: [
-                    {required: true, message: '名称为必填项', trigger: 'blur'}
-                    ],
-                number: [
-                    {type:'number',required: true, message: '次数为必填项', trigger: 'blur'}
+			updateSpreadLinkTermRules: {
+                link: [
+                    {required: true, message: '链接为必填项', trigger: 'blur'}
                     ]
                 },
-			updateVideoSetSearch:{
-    		 videoSetSearchId:1,
-    		 name:"",
-    		 number:1
-      },
+			updateSpreadLinkTerm:{},
       //删除参数
-      deleteVideoSetSearch:{},
-	    videoSetSearchList: [],
-	    videoSetSearchColumns: [
+      deleteSpreadLinkTerm:{},
+	    spreadLinkTermList: [],
+	    spreadLinkTermColumns: [
         {
           title: '序号',
           align:'center',
@@ -115,23 +97,18 @@ export default {
           }
         },
         {
-          title: '视频集搜索id',
-          key: 'videoSetSearchId',
+          title: '推广链接项id',
+          key: 'spreadLinkTermId',
           align:'center'
         },
         {
-        	title:'视频集搜索名称',
-        	key:'name',
+        	title:'链接',
+            key:'link',
             align:'center'
         },
         {
-        	title:'视频集搜索次数',
-        	key:'number',
-            align:'center'
-        },
-        {
-          title:'修改时间',
-          key:'updateDate',
+          title:'创建时间',
+          key:'createDate',
           sortable: true,
           align:'center'
         },
@@ -170,8 +147,8 @@ export default {
               }, '删除');
             	var s=h("div","");
 			s=h("div",[
-              varhh1,
-              varhh2
+              varhh1
+              ,varhh2
             ]);
             return s;
           }
@@ -193,25 +170,23 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
-       countUrl:'/videoSetSearch/count',
-       listUrl:'/videoSetSearch/list',
-       list:'videoSetSearchList'
+       countUrl:'/spreadLinkTerm/count',
+       listUrl:'/spreadLinkTerm/list',
+       data:'spreadLinkTermList'
      },this.params)
     },
   //增加
 	 add (params) {
-      this.addVideoSetSearchModel = true
-      this.addVideoSetSearch.name = params.name
-      //this.addVideoSetSearch.number = params.number
+      this.addSpreadLinkTermModel = true
     },
 		//增加取消
 		 addCancel () {
       if (!this.addLoading) {
-        this.addVideoSetSearchModel = false
-        this.$refs.addVideoSetSearch.resetFields()
+        this.addSpreadLinkTermModel = false
+        this.$refs.addSpreadLinkTerm.resetFields()
       }
     },
 		//增加确定
@@ -226,24 +201,26 @@ export default {
      * p.showModel 界面模型显示隐藏
      */
     this.axiosbusiness.add(this,{
-      ref:'addVideoSetSearch',
-      url:'/videoSetSearch/add',
-      requestObject:'addVideoSetSearch',
+      ref:'addSpreadLinkTerm',
+      url:'/spreadLinkTerm/add',
+      requestObject:'addSpreadLinkTerm',
       loading:'addLoading',
-      showModel:'addVideoSetSearchModel'
+      showModel:'addSpreadLinkTermModel'
     })
     },
 	 update (params) {
-      this.updateVideoSetSearchModel = true
-      this.updateVideoSetSearch.name = params.name
-      this.updateVideoSetSearch.number = params.number
-      this.updateVideoSetSearch.videoSetSearchId = params.videoSetSearchId
+      this.updateSpreadLinkTermModel = true
+     //获取修改实体
+      this.axiosbusiness.get(this,{
+         url:'/spreadLinkTerm/load?spreadLinkTermId='+params.spreadLinkTermId,
+         data:'updateSpreadLinkTerm',
+       })
     },
 		//修改取消
 		 updateCancel () {
       if (!this.updateLoading) {
-        this.updateVideoSetSearchModel = false
-        this.$refs.updateVideoSetSearch.resetFields()
+        this.updateSpreadLinkTermModel = false
+        this.$refs.updateSpreadLinkTerm.resetFields()
       }
     },
 		//修改确定
@@ -258,11 +235,11 @@ export default {
      * p.showModel 界面模型显示隐藏
      */
     this.axiosbusiness.update(this,{
-      ref:'updateVideoSetSearch',
-      url:'/videoSetSearch/update',
-      requestObject:'updateVideoSetSearch',
+      ref:'updateSpreadLinkTerm',
+      url:'/spreadLinkTerm/update',
+      requestObject:'updateSpreadLinkTerm',
       loading:'updateLoading',
-      showModel:'updateVideoSetSearchModel'
+      showModel:'updateSpreadLinkTermModel'
     })
  
     },
@@ -274,12 +251,12 @@ export default {
      * p.url 修改url
      * p.requestObject 请求参数对象
      */
-    this.deleteVideoSetSearch={
-      "videoSetSearchId":params.videoSetSearchId
+    this.deleteSpreadLinkTerm={
+      "spreadLinkTermId":params.spreadLinkTermId
     };
     this.axiosbusiness.delete(this,{
-      url:'/videoSetSearch/delete',
-      requestObject:'deleteVideoSetSearch'
+      url:'/spreadLinkTerm/delete',
+      requestObject:'deleteSpreadLinkTerm'
     })
     }
   },

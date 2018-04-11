@@ -3,16 +3,6 @@
     <div class="body-wrap">
     <div class="body-btn-wrap">
       <Button type='error'  @click='add'>增加系统通知</Button>
-      <div class="search-wrap">
-        <Select v-model="params.title" transfer class="search-wrap-input"  placeholder="标题，全部">
-            <Option v-for="item in titleParamsList" :value="item.value" :key="item.id">{{ item.value }}</Option>
-        </Select>
-        <Input v-model="params.accountId" class="search-wrap-input" placeholder="账户Id"></Input>
-        <Select v-model="params.status" transfer class="search-wrap-input"  placeholder="状态，全部">
-            <Option v-for="item in statusParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
-        </Select>
-        <Button @click="search" type="info"  >查询</Button>
-      </div>
     </div>
 	<!--新增 -->
      <Modal v-model="addNoticeModel"
@@ -21,10 +11,10 @@
            :mask-closable="false"
     >
       <Form ref="addNotice" :model="addNotice" :label-width="100"  label-position="right"  :rules="addNoticeRules">
-        <!-- <FormItem prop="title" label="标题:">
+        <FormItem prop="title" label="标题:">
           <Input type="text" v-model="addNotice.title" placeholder="标题">
           </Input>
-        </FormItem> -->
+        </FormItem>
         <FormItem prop="imgAddress" label="封面(上传或者填写):" id="addImgAddressBox">
           <Button type="primary" @click="addImgAddressClick('addImgAddress')" >上传</Button>
           <input type="file" style="width:0px;height:0px;" id="addImgAddress" ref="addImgAddress">
@@ -55,10 +45,10 @@
            :mask-closable="false"
     >
       <Form ref="updateNotice" :model="updateNotice" :label-width="100" label-position="right"  :rules="updateNoticeRules">
-        <!-- <FormItem prop="title" label="标题:">
+        <FormItem prop="title" label="标题:">
           <Input type="text" v-model="updateNotice.title" placeholder="标题">
           </Input>
-        </FormItem> -->
+        </FormItem>
         <FormItem prop="imgAddress" label="封面(上传或者填写):" id="updateImgAddressBox">
           <Button type="primary" @click="updateImgAddressClick('updateImgAddress')" >上传</Button>
           <input type="file" style="width:0px;height:0px;" id="updateImgAddress" ref="updateImgAddress">
@@ -84,7 +74,7 @@
     </Modal>
     <!--修改end -->
       <Table border :columns='noticeColumns' :data='noticeList' ref='table' size="small"></Table>
-        <div style='display: inline-block;float: right; margin-top:10px;'>
+        <div style='display:inline-block;float: right; margin-top:10px;'>
         <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'  @on-change='selectPage' show-elevator ></Page>
       </div>
     </div>
@@ -95,32 +85,13 @@ export default {
   data () {
     return {
         params:{
+            region:1,//全局
             startNum:1,//初始化个数
             currentPage:1,//当前页
             pageNum:1,//获取的第几个开始
             pageSize:10,//每页的个数
             total:0//总数
         },
-         //查询标题
-          titleParamsList:[
-          {id:'',value:'全部通知'},
-          {id:0,value:'系统通知'},
-          {id:1,value:'团购通知'},
-          {id:2,value:'提现到帐通知'},
-          {id:3,value:'团购卡余额不足'},
-          {id:4,value:'团购申请'}
-          ],
-        //查询状态
-        statusParamsList:[
-          {id:'',value:'全部'},
-          {id:0,value:'未读'},
-          {id:1,value:'已读'}
-        ],
-      //状态
-      statusList:[
-        {id:0,value:'未读'},
-        {id:1,value:'已读'}
-        ],
 			//增加参数
 			addNoticeModel:false,
 			addLoading:false,
@@ -136,9 +107,10 @@ export default {
                     ]
                 },
 			addNotice:{
-                title:'系统通知',
+                type:1,//系统消息
+                region:1,//范围1全局，2个人
+                title:'系统消息',
                 imgAddress:'http://p2bhwwngu.bkt.clouddn.com/o_1c5gaqqst68db2j16nno61q3cp.jpg',//默认系统通知图片
-                status:0//默认未读
 			},
 			//修改参数
 			updateNoticeModel:false,
@@ -159,8 +131,7 @@ export default {
       //删除参数
       deleteNotice:{},
       //列表
-	    noticeCateList: [],
-        noticeList: [],
+      noticeList: [],
 	    noticeColumns: [
         {
           title: '序号',
@@ -196,23 +167,9 @@ export default {
           }
         },
         {
-        	title:'状态',
-        	key:'status',
-          align:'center',
-          render: (h, params) => {
-            let statusvalue="";
-            this.statusList.forEach(element => {
-              if(element.id==params.row.status){
-                statusvalue=element.value;
-              }
-            });
-             return  h('span',statusvalue);
-          }
-        },
-        {
         	title:'内容',
           key:'content',
-          width:200,
+          //width:200,
           align:'center'
         },
         {
@@ -278,13 +235,6 @@ export default {
       this.params.pageNum = (this.params.currentPage-1)*this.params.pageSize+this.params.startNum;
       this.getList()
     },
-    //查询
-    search(){
-      if(this.params.title=='全部通知'||!this.params.title){
-        delete this.params.title
-      }
-      this.getList()
-    },
     //增加上传图片
      addImgAddressClick(p){
          this.$refs[p].click();
@@ -300,12 +250,12 @@ export default {
      * $this  vue组件
      * p.countUrl 数量url
      * p.listUrl 列表url
-     * p.list 返回列表
+     * p.data 返回列表
      */
      this.axiosbusiness.getList(this,{
        countUrl:'/notice/count',
        listUrl:'/notice/list',
-       list:'noticeList'
+       data:'noticeList'
      },this.params)
     },
   //增加
@@ -345,8 +295,8 @@ export default {
       this.updateNoticeModel = true
         //获取修改实体
       this.axiosbusiness.get(this,{
-         url:'/notice/'+params.noticeId,
-         list:'updateNotice'
+         url:'/notice/load?noticeId='+params.noticeId,
+         data:'updateNotice'
          })
     },
 		//修改取消

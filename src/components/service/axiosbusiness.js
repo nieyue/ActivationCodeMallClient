@@ -15,7 +15,7 @@ export default {
      */
     getList($this,p,params) {
         //过滤属性值为null、''、undefined的属性
-         let filterParams=(obj)=>{
+        let filterParams=(obj)=>{
             let _newPar = {};
             for (let key in obj) {
                 //如果对象属性的值不为空，就保存该属性（这里我做了限制，如果属性的值为0，保存该属性。如果属性的值全部是空格，属于为空。）

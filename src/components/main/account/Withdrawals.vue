@@ -186,18 +186,30 @@ export default {
                statusvalue,
                 h('Button', {
                 props: {
-                  type: 'primary',
+                  type: 'error',
                   size: 'small'
-                },
-                style: {
-                  margin: '15px'
                 },
                 on: {
                   click: () => {
-                    this.update(params.row)
+                    //this.update(params.row)
+                    this.withdrawals(params.row)
                   }
                 }
-              }, '编辑')
+              }, '提现到账'),
+              //   h('Button', {
+              //   props: {
+              //     type: 'primary',
+              //     size: 'small'
+              //   },
+              //   style: {
+              //     margin: '15px'
+              //   },
+              //   on: {
+              //     click: () => {
+              //       this.update(params.row)
+              //     }
+              //   }
+              // }, '编辑')
              ]
              );
 
@@ -284,7 +296,22 @@ export default {
       showModel:'updateFinanceRecordModel'
     })
  
+    },
+    //提现到账
+    withdrawals(params){
+      this.axiosbusiness.get(this,{
+         url:'/financeRecord/withdrawals?financeRecordId='+params.financeRecordId,
+         list:'updateFinanceRecord',
+         success:()=>{
+           this.financeRecordList.forEach(e=>{
+             if(e.financeRecordId==this.updateFinanceRecord.financeRecordId){
+               this.financeRecordList.splice(this.financeRecordList.indexOf(e),1,this.updateFinanceRecord)
+             }
+           })
+         }
+       })
     }
+
   },
   created () {
     this.getList();

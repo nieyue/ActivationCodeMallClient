@@ -12,14 +12,7 @@ import Mer from '@/components/main/mer/Mer'
 import MerCardCipher from '@/components/main/mer/MerCardCipher'
 import MerNotice from '@/components/main/mer/MerNotice'
 import MerImg from '@/components/main/mer/MerImg'
-import VideoSetCate from '@/components/main/video/VideoSetCate'
-import VideoSetSearch from '@/components/main/video/VideoSetSearch'
-import VideoSet from '@/components/main/video/VideoSet'
-import VideoSetTag from '@/components/main/video/VideoSetTag'
-import VideoCache from '@/components/main/video/VideoCache'
-import VideoPlayRecord from '@/components/main/video/VideoPlayRecord'
-import VideoSetCollect from '@/components/main/video/VideoSetCollect'
-import Video from '@/components/main/video/Video'
+import SpreadLinkTerm from '@/components/main/spread/SpreadLinkTerm'
 import AccountLevel from '@/components/main/account/AccountLevel'
 import Account from '@/components/main/account/Account'
 import BankCard from '@/components/main/account/BankCard'
@@ -31,6 +24,7 @@ import Integral from '@/components/main/integral/Integral'
 import IntegralDetail from '@/components/main/integral/IntegralDetail'
 import Order from '@/components/main/order/Order'
 import Config from '@/components/main/config/Config'
+import CouponTerm from '@/components/main/config/CouponTerm'
 import Banner from '@/components/main/config/Banner'
 import Notice from '@/components/main/config/Notice'
 import TeamPurchaseInfo from '@/components/main/teamPurchaseInfo/TeamPurchaseInfo'
@@ -110,49 +104,14 @@ const router= new Router({
           component: ArticleComment
         },
         {
-          path: 'videoSetCate',
-          name: '视频集类型',
-          component: VideoSetCate
-        },
-        {
-          path: 'videoSetSearch',
-          name: '视频集搜索',
-          component: VideoSetSearch
-        },
-        {
-          path: 'videoSet',
-          name: '视频集',
-          component: VideoSet
-        },
-        {
-          path: 'videoSetTag/:videoSetId',
-          name: '视频集标签',
-          component: VideoSetTag
-        },
-        {
-          path: 'video/:videoSetId',
-          name: '视频',
-          component: Video
-        },
-        {
-          path: 'videoCache',
-          name: '视频缓存',
-          component: VideoCache
-        },
-        {
-          path: 'videoPlayRecord',
-          name: '视频播放记录',
-          component: VideoPlayRecord
-        },
-        {
-          path: 'videoSetCollect',
-          name: '视频集收藏',
-          component: VideoSetCollect
-        },
-        {
           path: 'accountLevel',
           name: '账户等级',
           component: AccountLevel
+        },
+        {
+          path: 'spreadLinkTerm',
+          name: '推广链接项',
+          component: SpreadLinkTerm
         },
         {
           path: 'account',
@@ -237,6 +196,12 @@ const router= new Router({
           component: Config
         },
         {
+          path: 'couponTerm',
+          name: '优惠劵项',
+          component: CouponTerm
+        }
+        ,
+        {
           path: 'banner',
           name: 'banner',
           component: Banner
@@ -244,7 +209,7 @@ const router= new Router({
         ,
         {
           path: 'notice',
-          name: '通知',
+          name: '系统通知',
           component: Notice
         },
         {
