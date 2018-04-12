@@ -87,6 +87,7 @@ export default {
       //删除参数
       deleteSpreadLinkTerm:{},
 	    spreadLinkTermList: [],
+      a:[],
 	    spreadLinkTermColumns: [
         {
           title: '序号',
@@ -118,16 +119,22 @@ export default {
           align:'center',
           render: (h, params) => {
             var varhh1=  h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
+              attrs:{
+                id:"spreadLinkTerm"+params.index
+              },
+              props: {
+                type: 'primary',
+                size: 'small'
                 },
                 style: {
                   marginLeft: '10px'
                 },
                 on: {
                   click: () => {
-                    this.update(params.row)
+                   //let d=document.getElementById("spreadLinkTerm"+params.index);
+                  //d.disabled=true;
+                 // console.log(d.disabled)
+                   this.update(params.row)
                   }
                 }
               }, '编辑');
@@ -234,6 +241,7 @@ export default {
      * p.loading loading
      * p.showModel 界面模型显示隐藏
      */
+     delete this.updateSpreadLinkTerm.merCate
     this.axiosbusiness.update(this,{
       ref:'updateSpreadLinkTerm',
       url:'/spreadLinkTerm/update',
