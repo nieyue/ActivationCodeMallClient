@@ -70,6 +70,12 @@
      },
       //验证是否登陆
       getIslogin(){
+        if(!sessionStorage.getItem("account")){
+          sessionStorage.clear()
+          this.$router.push('/')
+          this.$Message.info('请登录')
+          return;
+        }
         this.axios({
                method:"post",
                url:'/account/islogin',
