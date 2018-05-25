@@ -104,7 +104,7 @@ export default {
      * 增加
      * $this  vue组件
      * p.ref 验证
-     * p.addUrl 增加url
+     * p.url 增加url
      * p.requestObject 请求参数对象
      * p.loading loading
      * p.addModel 界面模型显示隐藏

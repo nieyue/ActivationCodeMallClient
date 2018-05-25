@@ -57,6 +57,7 @@
                   this.$Message.success('退出成功！');
                   this.$router.push('/')
                 } else {
+                  this.$emit("islogin",this.islogin);
                   this.$Message.error('失败')
                 }
               }).catch(res => {
@@ -72,6 +73,7 @@
       getIslogin(){
         if(!sessionStorage.getItem("account")){
           sessionStorage.clear()
+          this.$emit("islogin",this.islogin);
           this.$router.push('/')
           this.$Message.info('请登录')
           return;
@@ -91,6 +93,7 @@
                 //this.$router.push('/main')
               } else {
                 sessionStorage.clear()
+                this.$emit("islogin",this.islogin);
                 this.$router.push('/')
                 this.$Message.info('请登录')
               }

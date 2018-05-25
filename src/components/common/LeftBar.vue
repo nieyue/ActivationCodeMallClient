@@ -48,7 +48,6 @@
                     <MenuItem name="/main/account/spreadAccount">推广户账户</MenuItem> 
                     <MenuItem name="/main/account/sellerAccount">商户账户</MenuItem> 
                     <MenuItem name="/main/withdrawals">提现管理</MenuItem>
-                    <MenuItem name="/main/vipNumber">vip购买次数管理</MenuItem>
                 </Submenu>
                 <Submenu name="order">
                     <template slot="title">
