@@ -13,7 +13,7 @@
     >
       <Form ref="addMerNotice" :model="addMerNotice" :label-width="100"  label-position="right"  :rules="addMerNoticeRules">
         <FormItem prop="title" label="标题:">
-          <Input type="text" v-model="addMerNotice.title " placeholder="标题">
+          <Input type="text" v-model="addMerNotice.title" placeholder="标题">
           </Input>
         </FormItem>
         <FormItem prop="content" label="内容:">
@@ -38,7 +38,7 @@
     >
       <Form ref="updateMerNotice" :model="updateMerNotice" :label-width="100" label-position="right"  :rules="updateMerNoticeRules">
          <FormItem prop="title" label="标题:">
-          <Input type="text" v-model="updateMerNotice.title " placeholder="标题">
+          <Input type="text" v-model="updateMerNotice.title" placeholder="标题">
           </Input>
         </FormItem>
         <FormItem prop="content" label="内容:">

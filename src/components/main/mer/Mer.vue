@@ -900,6 +900,7 @@ export default {
      * p.loading loading
      * p.showModel 界面模型显示隐藏
      */
+     delete this.updateMer.merCate
     this.axiosbusiness.update(this,{
       ref:'updateMer',
       url:'/mer/update',

@@ -192,13 +192,19 @@ export default {
         },
         {
         	title:'文章名称',
-        	key:'title',
-          align:'center'
+        //	key:'title',
+          align:'center',
+          render:(h,params)=>{
+            return h('span',params.row.title.substr(0,10));
+          }
         },
         {
         	title:'文章子标题',
-        	key:'subtitle',
-          align:'center'
+        //	key:'subtitle',
+          align:'center',
+          render:(h,params)=>{
+            return h('span',params.row.subtitle.substr(0,10));
+          }
         },
         {
         	title:'来源',
