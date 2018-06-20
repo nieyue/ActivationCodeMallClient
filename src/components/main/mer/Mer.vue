@@ -77,6 +77,9 @@
               <Option v-for="item in recommendList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
         </FormItem>
+        <FormItem prop="stockNumber" label="库存:">
+          <InputNumber :max="1000000000" :min="0" :precision='0' v-model="addMer.stockNumber"></InputNumber>
+        </FormItem>
         <FormItem prop="oldUnitPrice" label="原始单价:">
           <InputNumber :max="1000000000" :min="0" @on-change="changeAddOldUnitPrice" :precision='2' v-model="addMer.oldUnitPrice"></InputNumber>元
         </FormItem>
@@ -164,6 +167,9 @@
           <Select v-model="updateMer.recommend" transfer size="large" style="width:100px">
               <Option v-for="item in recommendList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
+        </FormItem>
+        <FormItem prop="stockNumber" label="库存:">
+          <InputNumber :max="1000000000" :min="0" :precision='0' v-model="updateMer.stockNumber"></InputNumber>
         </FormItem>
         <FormItem prop="oldUnitPrice" label="原始单价:">
           <InputNumber :max="1000000000" :min="0"  :precision='2' @on-change="changeUpdateOldUnitPrice"  v-model="updateMer.oldUnitPrice"></InputNumber>元
@@ -901,6 +907,7 @@ export default {
      * p.showModel 界面模型显示隐藏
      */
      delete this.updateMer.merCate
+     delete this.updateMer.merImgList
     this.axiosbusiness.update(this,{
       ref:'updateMer',
       url:'/mer/update',
