@@ -343,6 +343,7 @@ export default {
      * p.loading loading
      * p.showModel 界面模型显示隐藏
      */
+     delete this.updateCouponTerm.merCate
     this.axiosbusiness.update(this,{
       ref:'updateCouponTerm',
       url:'/couponTerm/update',
