@@ -274,6 +274,18 @@ export default {
 			addMerModel:false,
 			addLoading:false,
 			addMerRules: {
+                merCateId: [
+                    {type:'number',required: true, message: '商品类型必选项', trigger: 'change'}
+                    ],
+                region: [
+                    {type:'number',required: true, message: '范围必选项', trigger: 'change'}
+                    ],
+                type: [
+                    {type:'number',required: true, message: '类型必选项', trigger: 'change'}
+                    ],
+                status: [
+                    {type:'number',required: true, message: '状态必选项', trigger: 'change'}
+                    ],
                 name: [
                     {required: true, message: '名称为必填项', trigger: 'blur'}
                     ]
@@ -285,6 +297,18 @@ export default {
 			updateMerModel:false,
 			updateLoading:false,
 			updateMerRules: {
+                 merCateId: [
+                    {type:'number',required: true, message: '商品类型必选项', trigger: 'change'}
+                    ],
+                region: [
+                    {type:'number',required: true, message: '范围必选项', trigger: 'change'}
+                    ],
+                type: [
+                    {type:'number',required: true, message: '类型必选项', trigger: 'change'}
+                    ],
+                status: [
+                    {type:'number',required: true, message: '状态必选项', trigger: 'change'}
+                    ],
                 name: [
                     {required: true, message: '名称为必填项', trigger: 'blur'}
                     ]

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+/* 
 import Index from '@/components/Index'
 import Main from '@/components/main/Main'
 import ArticleCate from '@/components/main/article/ArticleCate'
@@ -30,7 +31,7 @@ import Notice from '@/components/main/config/Notice'
 import TeamPurchaseInfo from '@/components/main/teamPurchaseInfo/TeamPurchaseInfo'
 import Role from '@/components/main/rolePermission/Role'
 import Permission from '@/components/main/rolePermission/Permission'
-import RolePermission from '@/components/main/rolePermission/RolePermission'
+import RolePermission from '@/components/main/rolePermission/RolePermission' */
 
 
 Vue.use(Router)
@@ -38,6 +39,199 @@ Vue.use(Router)
 const router= new Router({
  // export default new Router({
   routes: [
+    {
+      path: '/',
+      name: '首页',
+      redirect: "/index"
+    },
+    {
+      path: '/index',
+      name: '首页',
+      component: resolve=>require(['@/components/Index'],resolve)
+    },
+    {
+      path: '/main',
+      name: '主页',
+      component: resolve=>require(['@/components/main/Main'],resolve),
+      children:[
+        {
+          path: 'articleCate',
+          name: '文章分类',
+          component: resolve=>require(['@/components/main/article/ArticleCate'],resolve),
+        },
+        {
+          path: 'article',
+          name: '文章',
+          component: resolve=>require(['@/components/main/article/Article'],resolve),
+        },
+        {
+          path: 'merSearch',
+          name: '商品搜索',
+          component: resolve=>require(['@/components/main/mer/MerSearch'],resolve),
+        },
+        {
+          path: 'merCommon',
+          name: '商品公用',
+          component: resolve=>require(['@/components/main/mer/MerCommon'],resolve),
+        },
+        {
+          path: 'merCate',
+          name: '商品类型',
+          component: resolve=>require(['@/components/main/mer/MerCate'],resolve),
+        },
+        {
+          path: 'mer',
+          name: '商品',
+          component: resolve=>require(['@/components/main/mer/Mer'],resolve),
+        },
+        {
+          path: 'merCardCipher/:merId',
+          name: '商品卡密',
+          component: resolve=>require(['@/components/main/mer/MerCardCipher'],resolve),
+        },
+        {
+          path: 'merNotice/:merId',
+          name: '商品公告',
+          component: resolve=>require(['@/components/main/mer/MerNotice'],resolve),
+        },
+        {
+          path: 'merImg/:merId',
+          name: '商品图片',
+          component: resolve=>require(['@/components/main/mer/MerImg'],resolve),
+        },
+        {
+          path: 'articleComment/:articleId',
+          name: '文章评论',
+          component: resolve=>require(['@/components/main/article/ArticleComment'],resolve),
+        },
+        {
+          path: 'accountLevel',
+          name: '账户等级',
+          component: resolve=>require(['@/components/main/account/AccountLevel'],resolve),
+        },
+        {
+          path: 'spreadLinkTerm',
+          name: '推广链接项',
+          component: resolve=>require(['@/components/main/spread/SpreadLinkTerm'],resolve),
+        },
+        {
+          path: 'account',
+          name: '账户',
+          component: resolve=>require(['@/components/main/account/Account'],resolve),
+        },
+        {
+          path: 'account',
+          name: '账户',
+          component: resolve=>require(['@/components/main/account/Account'],resolve),
+          children:[
+            {
+              path: 'managerAccount',
+              name: '管理员账户',
+              component: resolve=>require(['@/components/main/account/Account'],resolve),
+            },
+            {
+              path: 'userAccount',
+              name: '用户账户',
+              component: resolve=>require(['@/components/main/account/Account'],resolve),
+            },
+            {
+              path: 'spreadAccount',
+              name: '推广户账户',
+              component: resolve=>require(['@/components/main/account/Account'],resolve),
+            },
+            {
+              path: 'sellerAccount',
+              name: '商户账户',
+              component: resolve=>require(['@/components/main/account/Account'],resolve),
+            }
+          ]
+        },
+        {
+          path: 'bankCard/:accountId',
+          name: '银行卡',
+          component: resolve=>require(['@/components/main/account/BankCard'],resolve),
+        },
+        {
+          path: 'sincerity/:accountId',
+          name: '诚信',
+          component: resolve=>require(['@/components/main/account/Sincerity'],resolve),
+        },
+        {
+          path: 'withdrawals',
+          name: '提现',
+          component: resolve=>require(['@/components/main/account/Withdrawals'],resolve),
+        },
+        {
+          path: 'finance/:accountId',
+          name: '财务',
+          component: resolve=>require(['@/components/main/finance/Finance'],resolve),
+        },
+        {
+          path: 'financeRecord/:accountId',
+          name: '财务记录',
+          component: resolve=>require(['@/components/main/finance/FinanceRecord'],resolve),
+        },
+        {
+          path: 'integral/:accountId',
+          name: '积分',
+          component: resolve=>require(['@/components/main/integral/Integral'],resolve),
+        },
+        {
+          path: 'integralDetail/:accountId',
+          name: '积分详情',
+          component: resolve=>require(['@/components/main/integral/IntegralDetail'],resolve),
+        },
+        {
+          path: 'teamPurchaseInfo/:accountId',
+          name: '团购信息',
+          component: resolve=>require(['@/components/main/teamPurchaseInfo/TeamPurchaseInfo'],resolve),
+        },
+        {
+          path: 'order',
+          name: '订单',
+          component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
+          path: 'config',
+          name: '公共配置',
+          component: resolve=>require(['@/components/main/config/Config'],resolve),
+        },
+        {
+          path: 'couponTerm',
+          name: '优惠劵项',
+          component: resolve=>require(['@/components/main/config/CouponTerm'],resolve),
+        }
+        ,
+        {
+          path: 'banner',
+          name: 'banner',
+          component: resolve=>require(['@/components/main/config/Banner'],resolve),
+        }
+        ,
+        {
+          path: 'notice',
+          name: '系统通知',
+          component: resolve=>require(['@/components/main/config/Notice'],resolve),
+        },
+        {
+          path: 'role',
+          name: '角色',
+          component: resolve=>require(['@/components/main/rolePermission/Role'],resolve),
+        },
+        {
+          path: 'permission',
+          name: '权限',
+          component: resolve=>require(['@/components/main/rolePermission/Permission'],resolve),
+        },
+        {
+          path: 'rolePermission/:roleId',
+          name: '角色权限',
+          component: resolve=>require(['@/components/main/rolePermission/RolePermission'],resolve),
+        }
+      ]
+    }
+  ]
+  /* routes: [
     {
       path: '/',
       name: '首页',
@@ -229,7 +423,7 @@ const router= new Router({
         }
       ]
     }
-  ]
+  ] */
 })
 router.beforeEach((to, from, next) => {
   if(to.fullPath.indexOf("role")>0
