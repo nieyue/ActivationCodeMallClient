@@ -3,7 +3,7 @@
     <div class="body-wrap">
     <div class="body-btn-wrap">
       <!-- <Button type='primary'  @click='add'>增加公共配置</Button> -->
-      <Button type='primary'  @click='update(updateConfig)'>修改公共配置</Button>
+      <Button type='primary' v-if="isSuperAdmin" @click='update(updateConfig)'>修改公共配置</Button>
     </div>
 		 <!--新增 -->
      <Modal v-model="addConfigModel"
@@ -194,6 +194,7 @@ export default {
   name: 'Config',
   data () {
     return {
+      isSuperAdmin:this.business.getIsSuperAdmin(),
         params:{
             startNum:1,//初始化个数
             currentPage:1,//当前页
@@ -336,7 +337,7 @@ export default {
   },
   created () {
     this.getList();
-    console.log(1111)
+    console.log(this.isSuperAdmin)
   },
   mounted () {
 

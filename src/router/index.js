@@ -125,11 +125,6 @@ const router= new Router({
           component: resolve=>require(['@/components/main/account/Account'],resolve),
           children:[
             {
-              path: 'managerAccount',
-              name: '管理员账户',
-              component: resolve=>require(['@/components/main/account/Account'],resolve),
-            },
-            {
               path: 'userAccount',
               name: '用户账户',
               component: resolve=>require(['@/components/main/account/Account'],resolve),
@@ -144,6 +139,18 @@ const router= new Router({
               name: '商户账户',
               component: resolve=>require(['@/components/main/account/Account'],resolve),
             }
+          ]
+        },
+        {
+          path: 'account',
+          name: '账户',
+          component: resolve=>require(['@/components/main/account/ManagerAccount'],resolve),
+          children:[
+            {
+              path: 'managerAccount',
+              name: '管理员账户',
+              component: resolve=>require(['@/components/main/account/ManagerAccount'],resolve),
+            },
           ]
         },
         {
