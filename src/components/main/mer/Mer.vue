@@ -4,9 +4,50 @@
     <div class="body-btn-wrap">
       <Button type='primary'  @click='add'>增加商品</Button>
       <div class="search-wrap">
+       <!--  <div>
+          <label for="">范围：</label>
+          <RadioGroup v-model="params.region" type="button" >
+              <Radio style="margin:5px;" :label="item.id" 
+              v-for="item in regionParamsList" :value="item.id" :key="item.id" >
+                  {{item.value}}
+              </Radio>
+          </RadioGroup>
+        </div>
+        <div>
+          <label for="">类型：</label>
+          <RadioGroup v-model="params.type" type="button" >
+              <Radio style="margin:5px;" :label="item.id" 
+              v-for="item in typeParamsList" :value="item.id" :key="item.id" >
+                  {{item.value}}
+              </Radio>
+          </RadioGroup>
+        </div>
+        <div>
+          <label for="">推荐：</label>
+          <RadioGroup v-model="params.recommend" type="button" >
+              <Radio style="margin:5px;" :label="item.id" 
+              v-for="item in recommendParamsList" :value="item.id" :key="item.id" >
+                  {{item.value}}
+              </Radio>
+          </RadioGroup>
+        </div>
+        <div>
+          <label for="">状态：</label>
+          <RadioGroup v-model="params.status" type="button" >
+              <Radio style="margin:5px;" :label="item.id" 
+              v-for="item in statusParamsList" :value="item.id" :key="item.id" >
+                  {{item.value}}
+              </Radio>
+          </RadioGroup>
+        </div>
+        <div>
+        <Input v-model="params.name" class="search-wrap-input" placeholder="名称，模糊查询"></Input>
+        <Input v-model="params.merCateId" class="search-wrap-input" placeholder="商品类型id"></Input>
+        <Input v-model="params.sellerAccountId" class="search-wrap-input" placeholder="商户账户id"></Input>
+        </div> -->
         <Select v-model="params.region"  transfer class="search-wrap-input" placeholder="范围，全部" >
             <Option v-for="item in regionParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
-        </Select>
+        </Select> 
         <Select v-model="params.type"  transfer class="search-wrap-input" placeholder="类型，全部">
             <Option v-for="item in typeParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
         </Select>
@@ -546,7 +587,7 @@ export default {
                      this.$router.push('/main/merCardCipher/'+params.row.merId);
                   }
                 }
-              }, '商品卡密');
+              }, '商品卡密(库存)');
             var varhh01=  h('Button', {
                 props: {
                   type: 'info',
@@ -575,49 +616,6 @@ export default {
                   }
                 }
               }, '商品图片');
-            var varhh11=  h('Button', {
-                props: {
-                  type: 'dashed',
-                  size: 'small'
-                },
-                style: {
-                  margin: marginstyle
-                },
-                on: {
-                  click: () => {
-                     this.$router.push('/main/integralDetail/'+params.row.MerId);
-                  }
-                }
-              }, '积分详情');
-            var varhh30=  h('Button', {
-                props: {
-                  type: 'ghost',
-                  size: 'small'
-                },
-                style: {
-                  margin: marginstyle
-                },
-                on: {
-                  click: () => {
-                    this.$router.push('/main/bankCard/'+params.row.MerId);
-                  }
-                }
-              }, '银行卡');
-            var varhh31=  h('Button', {
-                props: {
-                  type: 'ghost',
-                  size: 'small'
-                },
-                style: {
-                  margin: marginstyle
-                },
-                on: {
-                  click: () => {
-                    this.$router.push('/main/sincerity/'+params.row.MerId);
-                  }
-                }
-              }, '诚信');
-              
             var varhh20=  h('Button', {
                 props: {
                   type: 'primary',
@@ -649,20 +647,15 @@ export default {
             	var s=h("div","");
 			s=h("div",[
         h("div",[
-           varhh10,
-          varhh11
+          varhh10,
+           varhh01
         ]),
         h("div",[
            varhh00,
-          varhh01
-        ]),
-        h("div",[
-           varhh30,
-           varhh31
         ]),
         h("div",[
            varhh20
-           //,varhh21
+           ,varhh21
         ])
             ]);
             return s;
@@ -959,6 +952,9 @@ export default {
     }
   },
   created () {
+    this.params.region=this.regionParamsList[1].id;//默认显示官网自营
+    this.params.recommend=this.recommendParamsList[0].id;//默认显示官网自营
+    this.params.status=this.statusList[1].id;//默认显示官网自营
     this.getMerCateList();
     //增加中的上传图片预加载
     this.utils.getQiniuSimpleUploader(this,{

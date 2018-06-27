@@ -17,7 +17,7 @@
           </Input>
         </FormItem>
       </Form>
-      <div slot='footer'>
+      <div slot="footer">
         <Button type='ghost' @click='addCancel'>取消</Button>
         <Button type='primary' :loading='addLoading'>
           <span v-if="!addLoading" @click='addSure'>确定</span>
@@ -191,16 +191,19 @@ export default {
 	 add (params) {
       this.addArticleCateModel = true
       this.addArticleCate.name = params.name
+      console.log(111)
     },
 		//增加取消
 		 addCancel () {
-      if (!this.addLoading) {
-        this.addArticleCateModel = false
+       if (!this.addLoading) {
+         this.addArticleCateModel = false
         this.$refs.addArticleCate.resetFields()
       }
+      console.log(11122)
     },
 		//增加确定
     addSure () {
+      console.log(11122222333)
        /**
      * 增加
      * $this  vue组件
