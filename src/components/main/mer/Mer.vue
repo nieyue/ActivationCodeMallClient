@@ -102,7 +102,7 @@
         </FormItem>
           <FormItem prop="imgAddress" label="图像(上传或者填写):" id="addImgAddressBox">
           <Button type="primary" @click="addImgAddressClick('addImgAddress')" >上传</Button>
-          <input type="file" style="width:0px;height:0px;" id="addImgAddress" ref="addImgAddress">
+          <input type="file" style="width:0px;height:0px;display:none;" id="addImgAddress" ref="addImgAddress">
           <div>
             <Input type="text" v-model="addMer.imgAddress" placeholder="图像">
           </Input>

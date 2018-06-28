@@ -26,6 +26,7 @@ Vue.prototype.axiosbusiness=axiosbusiness
 Vue.prototype.business=business
 Vue.use(VueAxios, axios)
 Vue.use(iView)
+
 //全局监听事件
 Vue.prototype.Hub = new Vue();
 new Vue({

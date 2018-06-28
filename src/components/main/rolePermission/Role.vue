@@ -37,10 +37,10 @@
            :mask-closable="false"
     >
       <Form ref="updateRole" :model="updateRole" :label-width="100" label-position="right"  :rules="updateRoleRules">
-        <FormItem prop="name" label="角色名:">
+        <!-- <FormItem prop="name" label="角色名:">
           <Input type="text" v-model="updateRole.name" placeholder="角色名">
           </Input>
-        </FormItem>
+        </FormItem> -->
         <FormItem prop="duty" label="角色职责:">
           <Input type="text" v-model="updateRole.duty" placeholder="角色职责">
           </Input>

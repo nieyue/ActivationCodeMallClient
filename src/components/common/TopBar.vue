@@ -2,7 +2,7 @@
 <template>
     <div class="topbar">
         <div class="topbar-left">
-            <img src=""/>
+            <!-- <img src="#"/> -->
             <span class="topbar-left-title">激活码商城</span>
         </div>
         <div class="topbar-right" v-if="islogin">
