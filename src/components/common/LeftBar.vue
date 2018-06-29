@@ -30,13 +30,13 @@
                     <MenuItem name="/main/merCate">商品类型</MenuItem>
                     <MenuItem name="/main/mer">商品</MenuItem>
                 </Submenu>
-                <Submenu name="spread">
+               <!--  <Submenu name="spread">
                     <template slot="title">
                         <Icon type="earth"></Icon>
                         推广管理
                     </template>
                     <MenuItem name="/main/spreadLinkTerm">推广链接项</MenuItem>
-                </Submenu>
+                </Submenu> -->
                 <Submenu name="account">
                     <template slot="title">
                         <Icon type="person"></Icon>

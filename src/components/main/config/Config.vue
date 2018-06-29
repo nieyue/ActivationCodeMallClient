@@ -337,7 +337,8 @@ export default {
   },
   created () {
     this.getList();
-    console.log(this.isSuperAdmin)
+    //console.log(this.isSuperAdmin)
+    //console.log(this.axios.defaults.baseURL)
   },
   mounted () {
 
