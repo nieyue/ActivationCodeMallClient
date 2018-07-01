@@ -40,47 +40,143 @@ export default {
             pageSize:10,//每页的个数
             total:0//总数
         },
-      //类型，1VIP购买，2团购卡团购，3付费课程
+      //类型，1购买商品，2账户提现，3退款，4诚信押金
       typeList:[
-        {id:1,value:'VIP购买'},
-        {id:2,value:'团购卡团购'},
-        {id:3,value:'付费课程'}
+        {id:1,value:'购买商品'},
+        {id:2,value:'账户提现'},
+        {id:3,value:'退款'},
+        {id:4,value:'诚信押金'}
       ],
-      //支付类型，1支付宝，2微信,3余额支付,4ios内购
+      //方式，1支付宝，2微信,3百度钱包,4Paypal,5网银
       payTypeList:[
         {id:1,value:'支付宝'},
         {id:2,value:'微信'},
-        {id:3,value:'余额支付'},
-        {id:4,value:'ios内购'}
+        {id:3,value:'百度钱包'},
+        {id:4,value:'Paypal'},
+        {id:5,value:'网银'}
       ],
-      //订单状态，-1待处理删除，0已完成删除,1待处理，2已完成
+      //订单状态，2待支付，3已支付,4预购商品，5问题单，6已取消，7已删除
+      //子状态，2（1待支付），3（1冻结单，2已完成），4（1等待发货），
+      //5（1待解决（买家提问后），2解决中（卖家回复后），3申请退款，4已退款，5已解决），6（1正常取消,2订单商品库存不够），7（1已删除）
       statusList:[
-        {id:-1,value:'待处理删除'},
-        {id:0,value:'已完成删除'},
-        {id:1,value:'待处理'},
-        {id:2,value:'已完成'}
+        {
+          id:2,
+          value:'待支付',
+          substatusList:[
+           {id:1,value:'待支付'},
+          ]
+        },
+        {
+          id:3,
+          value:'已支付',
+          substatusList:[
+           {id:1,value:'冻结单'},
+           {id:2,value:'已完成'},
+          ]
+        },
+        {
+          id:4,
+          value:'预购商品',
+          substatusList:[
+           {id:1,value:'等待发货'},
+          ]
+          },
+        {
+          id:5,
+          value:'问题单',
+          substatusList:[
+           {id:1,value:'待解决'},
+           {id:2,value:'解决中'},
+           {id:3,value:'申请退款'},
+           {id:4,value:'已退款'},
+           {id:5,value:'已解决'},
+          ]
+          },
+        {
+          id:6,
+          value:'已取消',
+          substatusList:[
+           {id:1,value:'正常取消'},
+           {id:2,value:'订单商品库存不够'},
+          ]
+          },
+        {
+          id:7,
+          value:'已删除',
+          substatusList:[
+            {id:1,value:'已删除'}
+          ]
+          },
       ],
-      //查询类型，1VIP购买，2团购卡团购，3付费课程
+     
+      //类型，1购买商品，2账户提现，3退款，4诚信押金
       typeParamsList:[
-        {id:'',value:'全部'},
-        {id:1,value:'VIP购买'},
-        {id:2,value:'团购卡团购'},
-        {id:3,value:'付费课程'}
+        {id:1,value:'购买商品'},
+        {id:2,value:'账户提现'},
+        {id:3,value:'退款'},
+        {id:4,value:'诚信押金'}
       ],
-      //查询支付类型，1支付宝，2微信,3余额支付,4ios内购
+      //方式，1支付宝，2微信,3百度钱包,4Paypal,5网银
       payTypeParamsList:[
-        {id:'',value:'全部'},
         {id:1,value:'支付宝'},
         {id:2,value:'微信'},
-        {id:3,value:'余额支付'},
-        {id:4,value:'ios内购'}
+        {id:3,value:'百度钱包'},
+        {id:4,value:'Paypal'},
+        {id:5,value:'网银'}
       ],
       //查询状态
+      //订单状态，2待支付，3已支付,4预购商品，5问题单，6已取消，7已删除
+      //子状态，2（1待支付），3（1冻结单，2已完成），4（1等待发货），
+      //5（1待解决（买家提问后），2解决中（卖家回复后），3申请退款，4已退款，5已解决），6（1正常取消,2订单商品库存不够），7（1已删除）
       statusParamsList:[
-        {id:-1,value:'待处理删除'},
-        {id:0,value:'已完成删除'},
-        {id:1,value:'待处理'},
-        {id:2,value:'已完成'}
+        {
+          id:2,
+          value:'待支付',
+          substatusList:[
+           {id:1,value:'待支付'},
+          ]
+        },
+        {
+          id:3,
+          value:'已支付',
+          substatusList:[
+           {id:1,value:'冻结单'},
+           {id:2,value:'已完成'},
+          ]
+        },
+        {
+          id:4,
+          value:'预购商品',
+          substatusList:[
+           {id:1,value:'等待发货'},
+          ]
+          },
+        {
+          id:5,
+          value:'问题单',
+          substatusList:[
+           {id:1,value:'待解决'},
+           {id:2,value:'解决中'},
+           {id:3,value:'申请退款'},
+           {id:4,value:'已退款'},
+           {id:5,value:'已解决'},
+          ]
+          },
+        {
+          id:6,
+          value:'已取消',
+          substatusList:[
+           {id:1,value:'正常取消'},
+           {id:2,value:'订单商品库存不够'},
+          ]
+          },
+        {
+          id:7,
+          value:'已删除',
+          substatusList:[
+            {id:1,value:'已删除'}
+          ]
+          },
       ],
 	    orderList: [],
 	    orderColumns: [
@@ -140,18 +236,33 @@ export default {
           }
         },
        {
-        	title:'状态',
-            key:'status',
+        	title:'状态/子状态',
+           // key:'status',
             align:'center',
           render: (h, params) => {
             let statusvalue="";
+            let substatusvalue="";
             let resulth;
             this.statusList.forEach(element => {
               if(element.id==params.row.status){
                 statusvalue=element.value;
+                  element.substatusList.forEach(substatus => {
+                    if(substatus.id==params.row.substatus){
+                      substatusvalue=substatus.value;
+                    }
+                  });
               }
             });
-                resulth=h('span', statusvalue);
+                resulth=h('span', statusvalue+"/"+substatusvalue);
+             return  resulth;
+          }
+        },
+        {
+          title:'订单商品类型',
+          align:'center',
+          render: (h, params) => {
+            let resulth;
+             resulth=h('span', params.row.orderDetailList[0].merCateName);
              return  resulth;
           }
         },
@@ -179,6 +290,15 @@ export default {
           }
         },
         {
+          title:'单价',
+          align:'center',
+          render: (h, params) => {
+            let resulth;
+             resulth=h('span', params.row.orderDetailList[0].unitPrice);
+             return  resulth;
+          }
+        },
+        {
           title:'数量',
           align:'center',
           render: (h, params) => {
@@ -197,23 +317,27 @@ export default {
           }
         },
         {
-            title:'业务id',
+            title:'优惠券',
             align:'center',
             render: (h, params) => {
             let resulth;
-                resulth=h('span', params.row.orderDetailList[0].businessId);
+            let value="未使用";
+            if(params.row.orderDetailList[0].coupon){
+              value=params.row.orderDetailList[0].coupon.code
+            }
+                resulth=h('span', value);
                 return  resulth;
             }
         },
         {
-          title:'创建时间',
+          title:'下单时间',
           key:'createDate',
           sortable: true,
           align:'center'
         },
         {
-          title:'修改时间',
-          key:'updateDate',
+          title:'支付时间',
+          key:'paymentDate',
           sortable: true,
           align:'center'
         }
@@ -243,11 +367,15 @@ export default {
      this.axiosbusiness.getList(this,{
        countUrl:'/order/count',
        listUrl:'/order/list',
-       list:'orderList'
+       data:'orderList',
+       success:()=>{
+        // console.log(this.orderList)
+       }
      },this.params)
     }
   },
   created () {
+    console.log(22222)
     this.getList();
   },
   mounted () {
