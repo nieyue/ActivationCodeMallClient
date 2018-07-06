@@ -28,7 +28,10 @@
                     <MenuItem name="/main/merSearch">商品搜索</MenuItem>
                     <MenuItem name="/main/merCommon">商品公用</MenuItem>
                     <MenuItem name="/main/merCate">商品类型</MenuItem>
-                    <MenuItem name="/main/mer">商品</MenuItem>
+                    <MenuItem name="/main/mer">全部商品</MenuItem>
+                    <MenuItem name="/main/selfMer">官网自营商品</MenuItem>
+                    <MenuItem name="/main/sellerNoSelfMer">商户非自营商品</MenuItem>
+                    <MenuItem name="/main/sellerSelfMer">商户非自营商品</MenuItem>
                 </Submenu>
                <!--  <Submenu name="spread">
                     <template slot="title">

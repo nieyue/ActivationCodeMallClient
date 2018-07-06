@@ -81,7 +81,22 @@ const router= new Router({
         },
         {
           path: 'mer',
-          name: '商品',
+          name: '全部商品',
+          component: resolve=>require(['@/components/main/mer/Mer'],resolve),
+        },
+        {
+          path: 'selfMer',
+          name: '官网自营商品',
+          component: resolve=>require(['@/components/main/mer/Mer'],resolve),
+        },
+        {
+          path: 'sellerNoSelfMer',
+          name: '商户非自营商品',
+          component: resolve=>require(['@/components/main/mer/Mer'],resolve),
+        },
+        {
+          path: 'sellerSelfMer',
+          name: '商户自营商品',
           component: resolve=>require(['@/components/main/mer/Mer'],resolve),
         },
         {

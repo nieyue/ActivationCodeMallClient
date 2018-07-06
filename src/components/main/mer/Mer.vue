@@ -76,7 +76,7 @@
               <Option v-for="item in merCateList" :value="item.merCateId" :key="item.merCateId">{{ item.name }}</Option>
           </Select>
         </FormItem>
-        <FormItem prop="region" label="范围，1官网自营，2商家自营:">
+        <FormItem prop="region" label="范围，1官网自营，2商家非自营，3商家自营:">
           <Select v-model="addMer.region" transfer size="large" style="width:100px">
               <Option v-for="item in regionList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
@@ -167,7 +167,7 @@
               <Option v-for="item in merCateList" :value="item.merCateId" :key="item.merCateId">{{ item.name }}</Option>
           </Select>
         </FormItem>
-       <FormItem prop="region" label="范围，1官网自营，2商家自营:">
+       <FormItem prop="region" label="范围，1官网自营，2商家非自营，3商家自营:">
           <Select v-model="updateMer.region" transfer size="large" style="width:100px">
               <Option v-for="item in regionList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
@@ -256,6 +256,7 @@ export default {
   name: 'Mer',
   data () {
     return {
+      routerPath:this.$route.path,
         params:{
             startNum:1,//初始化个数
             currentPage:1,//当前页
@@ -263,11 +264,12 @@ export default {
             pageSize:10,//每页的个数
             total:0//总数
         },
-          //范围，1官网自营，2商家自营
+          //范围，1官网自营，2商户非自营，3商户自营
           regionParamsList:[
           {id:'',value:'全部'},
           {id:1,value:'官网自营'},
-          {id:2,value:'商家自营'}
+          {id:2,value:'商户非自营'},
+          {id:3,value:'商户自营'}
           ],
           //类型，1普通商品，2降价商品，3预购商品
           typeParamsList:[
@@ -289,10 +291,11 @@ export default {
           {id:0,value:'下架'},
           {id:1,value:'上架'}
           ],
-         //范围，1官网自营，2商家自营
+         //范围，1官网自营，2商户非自营，3商户自营
           regionList:[
           {id:1,value:'官网自营'},
-          {id:2,value:'商家自营'}
+          {id:2,value:'商户非自营'},
+          {id:3,value:'商户自营'}
           ],
           //类型，1普通商品，2降价商品，3预购商品
           typeList:[
@@ -734,6 +737,43 @@ export default {
             discount:0,   
             unitPrice:0   
         };
+       this.regionParamsList=[
+          {id:'',value:'全部'},
+          {id:1,value:'官网自营'},
+          {id:2,value:'商户非自营'},
+          {id:3,value:'商户自营'}
+          ];
+         let regionParamsListLength=this.regionParamsList.length;
+        for(let i=0;i<regionParamsListLength;i++){
+      //路径为全部商品
+        if(this.routerPath=="/main/mer"){
+
+       }else if(this.routerPath=="/main/selfMer"){
+         //路径为官网自营
+          if(this.regionParamsList[i].value!='官网自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }else if(this.routerPath=="/main/sellerNoSelfMer"){
+         //路径为商户非自营
+          if(this.regionParamsList[i].value!='商户非自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }else if(this.routerPath=="/main/sellerSelfMer"){
+         //路径为商户自营
+          if(this.regionParamsList[i].value!='商户自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }
+       }
+      this.params.region=this.regionParamsList[0].id;
+      this.params.recommend=this.recommendParamsList[0].id;
+      this.params.status=this.statusList[1].id;
         this.getList();
        }
      },
@@ -951,10 +991,15 @@ export default {
     })
     }
   },
+   watch: {
+      $route (to,from){
+        //console.error(this.routerPath)
+        this.routerPath=this.$route.path;
+        this.getMerCateList();
+      }
+    },
   created () {
-    this.params.region=this.regionParamsList[1].id;//默认显示官网自营
-    this.params.recommend=this.recommendParamsList[0].id;//默认显示官网自营
-    this.params.status=this.statusList[1].id;//默认显示官网自营
+   
     this.getMerCateList();
     //增加中的上传图片预加载
     this.utils.getQiniuSimpleUploader(this,{
