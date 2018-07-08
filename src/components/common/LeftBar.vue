@@ -8,9 +8,16 @@
                         配置管理
                     </template>
                     <MenuItem name="/main/config">公共配置</MenuItem>
-                    <MenuItem name="/main/notice">系统通知</MenuItem>
                     <MenuItem name="/main/banner">banner</MenuItem>
                     <MenuItem name="/main/couponTerm">优惠劵项</MenuItem>
+                </Submenu>
+                <Submenu name="notice">
+                    <template slot="title">
+                        <Icon type="chatbox"></Icon>
+                        通知管理
+                    </template>
+                    <MenuItem name="/main/notice">系统通知</MenuItem>
+                    <MenuItem name="/main/notice2">申请新产品销售</MenuItem>
                 </Submenu>
                 <Submenu name="article">
                     <template slot="title">
@@ -31,7 +38,7 @@
                     <MenuItem name="/main/mer">全部商品</MenuItem>
                     <MenuItem name="/main/selfMer">官网自营商品</MenuItem>
                     <MenuItem name="/main/sellerNoSelfMer">商户非自营商品</MenuItem>
-                    <MenuItem name="/main/sellerSelfMer">商户非自营商品</MenuItem>
+                    <MenuItem name="/main/sellerSelfMer">商户自营商品</MenuItem>
                 </Submenu>
                <!--  <Submenu name="spread">
                     <template slot="title">

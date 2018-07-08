@@ -233,7 +233,12 @@ const router= new Router({
         {
           path: 'notice',
           name: '系统通知',
-          component: resolve=>require(['@/components/main/config/Notice'],resolve),
+          component: resolve=>require(['@/components/main/notice/Notice'],resolve),
+        },
+        {
+          path: 'notice2',
+          name: '申请新产品销售',
+          component: resolve=>require(['@/components/main/notice/Notice2'],resolve),
         },
         {
           path: 'role',

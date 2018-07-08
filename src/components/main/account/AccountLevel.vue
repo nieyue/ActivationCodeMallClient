@@ -133,7 +133,6 @@ export default {
 	    accountLevelColumns: [
         {
           title: '序号',
-          width:80,
           align:'center',
           render: (h, params) => {
             return h('span', params.index
@@ -143,25 +142,21 @@ export default {
         {
           title: '账户等级id',
           key: 'accountLevelId',
-          width:100,
           align:'center'
         },
         {
         	title:'账户等级名称',
             key:'name',
-             width:100,
             align:'center'
         },
         {
         	title:'等级',
             key:'level',
-             width:100,
             align:'center'
         },
         {
         	title:'图片',
             key:'imgAddress',
-             width:100,
           align:'center',
           render: (h, params) => {
             return h('img', {
@@ -177,32 +172,27 @@ export default {
         {
         	title:'商户升级积分',
             key:'sellerUpgradeIntegral',
-            width:100,
             align:'center'
         },
         {
         	title:'用户升级积分',
             key:'userUpgradeIntegral',
-            width:100,
             align:'center'
         },
         {
         	title:'备注',
             key:'mark',
-            width:200,
             align:'center'
         },
         {
           title:'修改时间',
           key:'updateDate',
-          width:100,
           sortable: true,
           align:'center'
         },
 				{
           title: '操作',
           key: 'action',
-          width:150,
           align:'center',
           fixed: 'right',
           render: (h, params) => {

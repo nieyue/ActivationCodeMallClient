@@ -218,5 +218,44 @@ export default {
                 $this.$Message.info('取消成功');
             }
         })
+    },
+    /**
+     * 通用
+     * $this  vue组件
+     * p.url 修改url
+     * p.title 标题
+     * p.content 内容
+     * p.requestObject 请求参数对象
+     * p.success 成功回调
+     */
+    common($this,p){
+        $this.$Modal.confirm({
+            title: p.title,
+            content: p.content,
+            onOk: () => {
+              $this.axios({
+                      method:"post",
+                      url:p.url,
+                      data:$this.Qs.stringify($this[p.requestObject]),
+                      withCredentials: true
+                      }).then(res => {
+                      if (res.data.code === 200) {
+                        $this.$Message.success(res.data.msg)
+                        if(typeof p.success=='function'){
+                            p.success(res.data.data);
+                        }else{
+                            $this.getList()
+                        }
+                      }else {
+                        $this.$Message.error(res.data.msg)
+                      }
+                    }).catch(res => {
+                        $this.$Message.error(res.data.msg)
+                    })
+                },
+            onCancel: () => {
+                $this.$Message.info('取消成功');
+            }
+        })
     }
  }
