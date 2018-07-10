@@ -1,4 +1,4 @@
-<!--申请新产品销售管理 -->
+<!--商品申请自营管理 -->
 <template>
     <div class="body-wrap">
       <Table border :columns='noticeColumns' :data='noticeList' ref='table' size="small"></Table>
@@ -40,7 +40,7 @@ export default {
           }
         },
         {
-          title: '申请新产品销售id',
+          title: '商品申请自营id',
           key: 'noticeId',
           align:'center'
         },
@@ -86,7 +86,7 @@ export default {
                 h("div","商品名称："+content.merName),
                 h("div","商品种类："+content.merCateName),
                 h("div","商品价格："+content.merPrice+"元"),
-                h("div","商品折扣："+content.merDiscount),
+                h("div","平台技术服务费："+content.merPlatformProportion+"%"),
             ]);
           }
         },
@@ -174,7 +174,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
-    this.params.type=2;//类型，1系统消息，2申请新产品销售，3新增商品类型，4商品申请自营，5提现申请，6问题单反馈，7订单商品动态
+    this.params.type=4;//类型，1系统消息，2商品申请自营，3新增商品类型，4商品申请自营，5提现申请，6问题单反馈，7订单商品动态
      this.axiosbusiness.getList(this,{
        countUrl:'/notice/count',
        listUrl:'/notice/list',

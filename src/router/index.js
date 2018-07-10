@@ -241,6 +241,16 @@ const router= new Router({
           component: resolve=>require(['@/components/main/notice/Notice2'],resolve),
         },
         {
+          path: 'notice3',
+          name: '新增商品类型',
+          component: resolve=>require(['@/components/main/notice/Notice3'],resolve),
+        },
+        {
+          path: 'notice4',
+          name: '商品申请自营',
+          component: resolve=>require(['@/components/main/notice/Notice4'],resolve),
+        },
+        {
           path: 'role',
           name: '角色',
           component: resolve=>require(['@/components/main/rolePermission/Role'],resolve),

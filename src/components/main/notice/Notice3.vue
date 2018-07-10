@@ -1,4 +1,4 @@
-<!--申请新产品销售管理 -->
+<!--新增商品类型管理 -->
 <template>
     <div class="body-wrap">
       <Table border :columns='noticeColumns' :data='noticeList' ref='table' size="small"></Table>
@@ -9,7 +9,7 @@
 </template>
 <script>
 export default {
-  name: 'Notice2',
+  name: 'Notice3',
   data () {
     return {
         params:{
@@ -40,7 +40,7 @@ export default {
           }
         },
         {
-          title: '申请新产品销售id',
+          title: '新增商品类型id',
           key: 'noticeId',
           align:'center'
         },
@@ -60,33 +60,26 @@ export default {
             align:'center'
         },
         {
-        	title:'封面',
-        	key:'imgAddress',
-          align:'center',
-          render: (h, params) => {
-            return h('img', {
-              attrs: {
-                src: params.row.imgAddress
-              },
-              style: {
-                width: '45px'
-              }
-            })
-          }
-        },
-        {
-        	title:'内容',
-          key:'content',
+            title:'商品种类',
           //width:200,
           align:'center',
           render: (h, params) => {
               var content =JSON.parse(params.row.content);
             return h('div',
             [
-                h("div","商品名称："+content.merName),
-                h("div","商品种类："+content.merCateName),
-                h("div","商品价格："+content.merPrice+"元"),
-                h("div","商品折扣："+content.merDiscount),
+                h("div",content.merCateName),
+            ]);
+          }
+        },
+        {
+            title:'商品种类介绍',
+          //width:200,
+          align:'center',
+          render: (h, params) => {
+              var content =JSON.parse(params.row.content);
+            return h('div',
+            [
+                h("div",content.merCateSummary),
             ]);
           }
         },
@@ -174,7 +167,7 @@ export default {
      * p.listUrl 列表url
      * p.data 返回列表
      */
-    this.params.type=2;//类型，1系统消息，2申请新产品销售，3新增商品类型，4商品申请自营，5提现申请，6问题单反馈，7订单商品动态
+    this.params.type=3;//类型，1系统消息，2新增商品类型，3新增商品类型，4商品申请自营，5提现申请，6问题单反馈，7订单商品动态
      this.axiosbusiness.getList(this,{
        countUrl:'/notice/count',
        listUrl:'/notice/list',

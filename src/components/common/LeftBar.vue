@@ -18,6 +18,8 @@
                     </template>
                     <MenuItem name="/main/notice">系统通知</MenuItem>
                     <MenuItem name="/main/notice2">申请新产品销售</MenuItem>
+                    <MenuItem name="/main/notice3">新增商品类型</MenuItem>
+                    <MenuItem name="/main/notice4">商品申请自营</MenuItem>
                 </Submenu>
                 <Submenu name="article">
                     <template slot="title">
