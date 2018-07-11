@@ -3,10 +3,15 @@
     <div class="body-wrap">
         <div style="color:green;">
             备注：下单人id即为账户id
-            业务id分两种，业务类型为付费课程，则业务id为视频集id;否则为账户等级id
         </div>
       <div class="body-btn-wrap">
         <div class="search-wrap">
+          <Select v-model="params.region" transfer class="search-wrap-input"  placeholder="范围，全部">
+              <Option v-for="item in regionParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
+          <Select v-model="params.merType" transfer class="search-wrap-input"  placeholder="商品类型，全部">
+              <Option v-for="item in merTypeParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
+          </Select>
           <Select v-model="params.type" transfer class="search-wrap-input"  placeholder="业务类型，全部">
               <Option v-for="item in typeParamsList" :value="item.id" :key="item.id">{{ item.value }}</Option>
           </Select>
@@ -32,14 +37,112 @@ export default {
   name: 'Order',
   data () {
     return {
+      routerPath:this.$route.path,
         params:{
-            status:2,//默认已完成
             startNum:1,//初始化个数
             currentPage:1,//当前页
             pageNum:1,//获取的第几个开始
             pageSize:10,//每页的个数
             total:0//总数
         },
+
+      //范围，1官网自营，2商户非自营，3商户自营
+      regionParamsList:[
+        {id:'',value:'全部'},
+        {id:1,value:'官网自营'},
+        {id:2,value:'商户非自营'},
+        {id:3,value:'商户自营'}
+      ],
+       //商品类型，1普通商品，2降价商品，3预购商品
+      merTypeParamsList:[
+        {id:'',value:'全部'},
+        {id:1,value:'普通商品'},
+        {id:2,value:'降价商品'},
+        {id:3,value:'预购商品'}
+      ],
+      //类型，1购买商品，2账户提现，3退款，4诚信押金
+      typeParamsList:[
+        {id:'',value:'全部'},
+        {id:1,value:'购买商品'},
+        {id:2,value:'账户提现'},
+        {id:3,value:'退款'},
+        {id:4,value:'诚信押金'}
+      ],
+      //方式，1支付宝，2微信,3百度钱包,4Paypal,5网银
+      payTypeParamsList:[
+        {id:'',value:'全部'},
+        {id:1,value:'支付宝'},
+        {id:2,value:'微信'},
+        {id:3,value:'百度钱包'},
+        {id:4,value:'Paypal'},
+        {id:5,value:'网银'}
+      ],
+      //查询状态
+      //订单状态，2待支付，3已支付,4预购商品，5问题单，6已取消，7已删除
+      //子状态，2（1待支付），3（1冻结单，2已完成），4（1等待发货），
+      //5（1待解决（买家提问后），2解决中（卖家回复后），3申请退款，4已退款，5已解决），6（1正常取消,2订单商品库存不够），7（1已删除）
+      statusParamsList:[
+        {
+          id:2,
+          value:'待支付',
+          substatusList:[
+           {id:1,value:'待支付'},
+          ]
+        },
+        {
+          id:3,
+          value:'已支付',
+          substatusList:[
+           {id:1,value:'冻结单'},
+           {id:2,value:'已完成'},
+          ]
+        },
+        {
+          id:4,
+          value:'预购商品',
+          substatusList:[
+           {id:1,value:'等待发货'},
+          ]
+          },
+        {
+          id:5,
+          value:'问题单',
+          substatusList:[
+           {id:1,value:'待解决'},
+           {id:2,value:'解决中'},
+           {id:3,value:'申请退款'},
+           {id:4,value:'已退款'},
+           {id:5,value:'已解决'},
+          ]
+          },
+        {
+          id:6,
+          value:'已取消',
+          substatusList:[
+           {id:1,value:'正常取消'},
+           {id:2,value:'订单商品库存不够'},
+          ]
+          },
+        {
+          id:7,
+          value:'已删除',
+          substatusList:[
+            {id:1,value:'已删除'}
+          ]
+          },
+      ],
+            //范围，1官网自营，2商户非自营，3商户自营
+      regionList:[
+        {id:1,value:'官网自营'},
+        {id:2,value:'商户非自营'},
+        {id:3,value:'商户自营'}
+      ],
+      //商品类型，1普通商品，2降价商品，3预购商品
+      merTypeList:[
+        {id:1,value:'普通商品'},
+        {id:2,value:'降价商品'},
+        {id:3,value:'预购商品'}
+      ],
       //类型，1购买商品，2账户提现，3退款，4诚信押金
       typeList:[
         {id:1,value:'购买商品'},
@@ -108,80 +211,11 @@ export default {
           ]
           },
       ],
-     
-      //类型，1购买商品，2账户提现，3退款，4诚信押金
-      typeParamsList:[
-        {id:1,value:'购买商品'},
-        {id:2,value:'账户提现'},
-        {id:3,value:'退款'},
-        {id:4,value:'诚信押金'}
-      ],
-      //方式，1支付宝，2微信,3百度钱包,4Paypal,5网银
-      payTypeParamsList:[
-        {id:1,value:'支付宝'},
-        {id:2,value:'微信'},
-        {id:3,value:'百度钱包'},
-        {id:4,value:'Paypal'},
-        {id:5,value:'网银'}
-      ],
-      //查询状态
-      //订单状态，2待支付，3已支付,4预购商品，5问题单，6已取消，7已删除
-      //子状态，2（1待支付），3（1冻结单，2已完成），4（1等待发货），
-      //5（1待解决（买家提问后），2解决中（卖家回复后），3申请退款，4已退款，5已解决），6（1正常取消,2订单商品库存不够），7（1已删除）
-      statusParamsList:[
-        {
-          id:2,
-          value:'待支付',
-          substatusList:[
-           {id:1,value:'待支付'},
-          ]
-        },
-        {
-          id:3,
-          value:'已支付',
-          substatusList:[
-           {id:1,value:'冻结单'},
-           {id:2,value:'已完成'},
-          ]
-        },
-        {
-          id:4,
-          value:'预购商品',
-          substatusList:[
-           {id:1,value:'等待发货'},
-          ]
-          },
-        {
-          id:5,
-          value:'问题单',
-          substatusList:[
-           {id:1,value:'待解决'},
-           {id:2,value:'解决中'},
-           {id:3,value:'申请退款'},
-           {id:4,value:'已退款'},
-           {id:5,value:'已解决'},
-          ]
-          },
-        {
-          id:6,
-          value:'已取消',
-          substatusList:[
-           {id:1,value:'正常取消'},
-           {id:2,value:'订单商品库存不够'},
-          ]
-          },
-        {
-          id:7,
-          value:'已删除',
-          substatusList:[
-            {id:1,value:'已删除'}
-          ]
-          },
-      ],
 	    orderList: [],
 	    orderColumns: [
         {
           title: '序号',
+          width:80,
           align:'center',
           render: (h, params) => {
             return h('span', params.index
@@ -190,22 +224,57 @@ export default {
         },
         {
           title: '订单id',
+           width:100,
           key: 'orderId',
           align:'center'
         },
         {
           title: '订单号',
+          width:100,
           key: 'orderNumber',
           align:'center'
         },
         {
           title: '下单人id',
+          width:100,
           key: 'accountId',
           align:'center'
         },
         {
+          title:'范围',
+          width:100,
+            align:'center',
+          render: (h, params) => {
+            let regionvalue="";
+            let resulth;
+            this.regionList.forEach(element => {
+              if(element.id==params.row.region){
+                regionvalue=element.value;
+              }
+            });
+                resulth=h('span',regionvalue);   
+             return  resulth;
+          }
+        },
+        {
+          title:'商品类型',
+          width:100,
+            align:'center',
+          render: (h, params) => {
+            let merTypevalue="";
+            let resulth;
+            this.merTypeList.forEach(element => {
+              if(element.id==params.row.merType){
+                merTypevalue=element.value;
+              }
+            });
+                resulth=h('span',merTypevalue);   
+             return  resulth;
+          }
+        },
+        {
         	title:'业务类型',
-            key:'type',
+          width:100,
             align:'center',
           render: (h, params) => {
             let typevalue="";
@@ -221,7 +290,7 @@ export default {
         },
         {
         	title:'支付类型',
-            key:'payType',
+          width:100,
             align:'center',
           render: (h, params) => {
             let payTypevalue="";
@@ -237,7 +306,7 @@ export default {
         },
        {
         	title:'状态/子状态',
-           // key:'status',
+          width:100,
             align:'center',
           render: (h, params) => {
             let statusvalue="";
@@ -259,6 +328,7 @@ export default {
         },
         {
           title:'订单商品类型',
+          width:100,
           align:'center',
           render: (h, params) => {
             let resulth;
@@ -268,6 +338,7 @@ export default {
         },
         {
           title:'订单名称',
+          width:100,
           align:'center',
           render: (h, params) => {
             let resulth;
@@ -277,6 +348,7 @@ export default {
         },
         {
           title:'订单封面',
+          width:100,
           align:'center',
           render: (h, params) => {
              return h('img', {
@@ -291,6 +363,7 @@ export default {
         },
         {
           title:'单价',
+          width:100,
           align:'center',
           render: (h, params) => {
             let resulth;
@@ -300,6 +373,7 @@ export default {
         },
         {
           title:'数量',
+          width:100,
           align:'center',
           render: (h, params) => {
             let resulth;
@@ -309,6 +383,7 @@ export default {
         },
         {
             title:'总价',
+            width:100,
           align:'center',
           render: (h, params) => {
               let resulth;
@@ -318,6 +393,7 @@ export default {
         },
         {
             title:'优惠券',
+            width:100,
             align:'center',
             render: (h, params) => {
             let resulth;
@@ -331,12 +407,14 @@ export default {
         },
         {
           title:'下单时间',
+          width:100,
           key:'createDate',
           sortable: true,
           align:'center'
         },
         {
           title:'支付时间',
+          width:100,
           key:'paymentDate',
           sortable: true,
           align:'center'
@@ -355,6 +433,43 @@ export default {
       this.params.pageNum = (this.params.currentPage-1)*this.params.pageSize+this.params.startNum;
       this.getList()
     },
+    getRegion(){
+      this.regionParamsList=[
+          {id:'',value:'全部'},
+          {id:1,value:'官网自营'},
+          {id:2,value:'商户非自营'},
+          {id:3,value:'商户自营'}
+          ];
+         let regionParamsListLength=this.regionParamsList.length;
+        for(let i=0;i<regionParamsListLength;i++){
+      //路径为全部商品
+        if(this.routerPath=="/main/order"){
+
+       }else if(this.routerPath=="/main/selfMerOrder"){
+         //路径为官网自营
+          if(this.regionParamsList[i].value!='官网自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }else if(this.routerPath=="/main/sellerNoSelfMerOrder"){
+         //路径为商户非自营
+          if(this.regionParamsList[i].value!='商户非自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }else if(this.routerPath=="/main/sellerSelfMerOrder"){
+         //路径为商户自营
+          if(this.regionParamsList[i].value!='商户自营'){
+           this.regionParamsList.splice(i,1);
+            regionParamsListLength--;
+            i--;
+          }
+       }
+       }
+       this.params.region=this.regionParamsList[0].id;
+    },
   //获取列表
    getList () {
      /**
@@ -369,13 +484,21 @@ export default {
        listUrl:'/order/list',
        data:'orderList',
        success:()=>{
-        // console.log(this.orderList)
+         
        }
+       
      },this.params)
     }
   },
+   watch: {
+      $route (to,from){
+        this.routerPath=this.$route.path;
+        this.getRegion();
+        this.getList();
+      }
+    },
   created () {
-    console.log(22222)
+    this.getRegion();
     this.getList();
   },
   mounted () {

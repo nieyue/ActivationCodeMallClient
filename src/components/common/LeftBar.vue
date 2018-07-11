@@ -66,7 +66,10 @@
                         <Icon type="ios-cart"></Icon>
                         订单管理
                     </template>
-                    <MenuItem name="/main/order">订单</MenuItem>
+                    <MenuItem name="/main/order">全部订单</MenuItem>
+                    <MenuItem name="/main/selfMerOrder">官网自营商品订单</MenuItem>
+                    <MenuItem name="/main/sellerNoSelfMerOrder">商户非自营商品订单</MenuItem>
+                    <MenuItem name="/main/sellerSelfMerOrder">商户自营商品订单</MenuItem>
                 </Submenu>
                 <Submenu v-if="isSuperAdmin" name="rolePermission">
                     <template slot="title">

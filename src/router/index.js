@@ -210,7 +210,22 @@ const router= new Router({
         },
         {
           path: 'order',
-          name: '订单',
+          name: '全部订单',
+          component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
+          path: 'selfMerOrder',
+          name: '官网自营商品订单',
+          component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
+          path: 'sellerNoSelfMerOrder',
+          name: '商户非自营商品订单',
+          component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
+          path: 'sellerSelfMerOrder',
+          name: '商户自营商品订单',
           component: resolve=>require(['@/components/main/order/Order'],resolve),
         },
         {
