@@ -241,7 +241,7 @@
     <!--修改end -->
       <Table border :columns='accountColumns' :data='accountList' ref='table' size="small"></Table>
         <div style='display: inline-block;float: right; margin-top:10px;'>
-        <Page style='margin-right:10px;' :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'  @on-change='selectPage' show-elevator ></Page>
+        <Page style='margin-right:10px;' :current="params.currentPage" :total='params.total' :pageSize='params.pageSize' ref='page' :show-total='true'  @on-change='selectPage' show-elevator ></Page>
       </div>
     </div>
 </template>
@@ -929,6 +929,8 @@ export default {
   },
    watch: {
       $route (to,from){
+        this.params.currentPage=1;
+        this.params.pageNum=1;
         //console.error(this.routerPath)
         this.routerPath=this.$route.path;
         this.getRoleList();
