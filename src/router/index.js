@@ -219,6 +219,11 @@ const router= new Router({
           component: resolve=>require(['@/components/main/order/Order'],resolve),
         },
         {
+          path: 'selfMerProblemOrder',
+          name: '官网自营商品问题订单',
+          component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
           path: 'sellerNoSelfMerOrder',
           name: '商户非自营商品订单',
           component: resolve=>require(['@/components/main/order/Order'],resolve),
@@ -227,6 +232,21 @@ const router= new Router({
           path: 'sellerSelfMerOrder',
           name: '商户自营商品订单',
           component: resolve=>require(['@/components/main/order/Order'],resolve),
+        },
+        {
+          path: 'merOrderCardCipher/:orderId',
+          name: '商品订单卡密',
+          component: resolve=>require(['@/components/main/order/MerOrderCardCipher'],resolve),
+        },
+        {
+          path: 'orderProblem/:orderId',
+          name: '订单问题',
+          component: resolve=>require(['@/components/main/order/OrderProblem'],resolve),
+        },
+        {
+          path: 'orderProblemAnswer/:orderProblemId',
+          name: '订单问题反馈',
+          component: resolve=>require(['@/components/main/order/orderProblemAnswer'],resolve),
         },
         {
           path: 'config',

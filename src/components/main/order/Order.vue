@@ -412,12 +412,62 @@ export default {
           sortable: true,
           align:'center'
         },
+          {
+            title:'更新时间',
+            key:'updateDate',
+             width:100,
+            sortable: true,
+            align:'center'
+          },
         {
           title:'支付时间',
           width:100,
           key:'paymentDate',
           sortable: true,
           align:'center'
+        },
+		    {
+          title: '操作',
+          key: 'action',
+           width:200,
+            fixed:'right',
+          align:'center',
+          render: (h, params) => {
+            var varhh1=  h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginLeft: '10px'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push('/main/merOrderCardCipher/'+params.row.orderId);
+                  }
+                }
+              }, '商品订单卡密');
+            var varhh2=  h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                style: {
+                  marginLeft: '10px'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push('/main/orderProblem/'+params.row.orderId);
+                  }
+                }
+              }, '订单问题');
+            	var s=h("div","");
+			s=h("div",[
+              varhh1
+              ,varhh2
+            ]);
+            return s;
+          }
         }
       ],
     }
@@ -445,7 +495,7 @@ export default {
       //路径为全部商品
         if(this.routerPath=="/main/order"){
 
-       }else if(this.routerPath=="/main/selfMerOrder"){
+       }else if(this.routerPath=="/main/selfMerOrder"||this.routerPath=="/main/selfMerProblemOrder"){
          //路径为官网自营
           if(this.regionParamsList[i].value!='官网自营'){
            this.regionParamsList.splice(i,1);
@@ -469,6 +519,72 @@ export default {
        }
        }
        this.params.region=this.regionParamsList[0].id;
+      //状态
+       this.statusParamsList=[
+        {
+          id:2,
+          value:'待支付',
+          substatusList:[
+           {id:1,value:'待支付'},
+          ]
+        },
+        {
+          id:3,
+          value:'已支付',
+          substatusList:[
+           {id:1,value:'冻结单'},
+           {id:2,value:'已完成'},
+          ]
+        },
+        {
+          id:4,
+          value:'预购商品',
+          substatusList:[
+           {id:1,value:'等待发货'},
+          ]
+          },
+        {
+          id:5,
+          value:'问题单',
+          substatusList:[
+           {id:1,value:'待解决'},
+           {id:2,value:'解决中'},
+           {id:3,value:'申请退款'},
+           {id:4,value:'已退款'},
+           {id:5,value:'已解决'},
+          ]
+          },
+        {
+          id:6,
+          value:'已取消',
+          substatusList:[
+           {id:1,value:'正常取消'},
+           {id:2,value:'订单商品库存不够'},
+          ]
+          },
+        {
+          id:7,
+          value:'已删除',
+          substatusList:[
+            {id:1,value:'已删除'}
+          ]
+          },
+      ];
+      let statusParamsListLength=this.statusParamsList.length;
+        for(let i=0;i<statusParamsListLength;i++){
+         if(this.routerPath=="/main/selfMerProblemOrder"){
+         //路径为官网自营且是问题单
+          if(this.statusParamsList[i].value!='问题单'){
+           this.statusParamsList.splice(i,1);
+            statusParamsListLength--;
+            i--;
+          }
+       this.params.status=this.statusParamsList[0].id
+        }else{
+       this.params.status={};
+
+        }
+      }
     },
   //获取列表
    getList () {
